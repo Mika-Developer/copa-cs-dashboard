@@ -457,7 +457,7 @@ footer{
   <div class="h-logo">⚽</div>
   <div class="h-title">
     <h1>Copa CS 2026</h1>
-    <p>Dashboard Executivo — Visão Geral</p>
+    <p>Dashboard — Visão Geral</p>
   </div>
   <div class="h-right">
     <div class="h-badge">
@@ -594,7 +594,7 @@ footer{
   </main>
 </div>
 
-<footer>Copa CS 2026 · Customer Success · Dados ao vivo · <span id="fts"></span></footer>
+<footer>Copa CS Suri 2026 · Dash by Mika · <span id="fts"></span></footer>
 
 </div><!-- /page-wrap -->
 
@@ -1208,7 +1208,98 @@ document.getElementById('psel').addEventListener('change',e=>{
 /* ── AUTO-REFRESH ────────────────────────────────────── */
 setInterval(init,5*60*1000);
 
-init();
+/* ── SENHA DE ACESSO ─────────────────────────────────── */
+(function checkPassword(){
+  const SENHA = 'borasuri2026';
+  const SESSION_KEY = 'copa_cs_auth';
+
+  if(sessionStorage.getItem(SESSION_KEY) === 'ok') return;
+
+  document.getElementById('loading').style.display = 'none';
+
+  const overlay = document.createElement('div');
+  overlay.id = 'auth-overlay';
+  overlay.style.cssText = `
+    position:fixed;inset:0;z-index:99999;
+    background:radial-gradient(ellipse at center,#0e3d1c 0%,#061c0e 100%);
+    display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:24px;font-family:'Sora',sans-serif;
+  `;
+  overlay.innerHTML = `
+    <div style="font-size:3rem;filter:drop-shadow(0 0 16px rgba(245,200,66,.7));animation:logoPulse 3s ease-in-out infinite">⚽</div>
+    <div style="color:#f5c842;font-size:1.5rem;font-weight:900;letter-spacing:3px;text-transform:uppercase;text-shadow:0 0 20px rgba(245,200,66,.5)">Copa CS 2026</div>
+    <div style="color:#a0c8b0;font-size:.88rem;letter-spacing:1px">Digite a senha para acessar</div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:320px">
+      <input
+        id="auth-input"
+        type="password"
+        placeholder="Senha"
+        style="
+          width:100%;padding:14px 20px;
+          background:rgba(255,255,255,.07);
+          border:1.5px solid rgba(46,204,113,.35);
+          border-radius:12px;color:#fff;
+          font-size:1rem;font-family:'Sora',sans-serif;
+          outline:none;text-align:center;letter-spacing:3px;
+          transition:border-color .2s;
+        "
+      />
+      <div id="auth-error" style="color:#ff6b6b;font-size:.8rem;min-height:18px;font-weight:600"></div>
+      <button
+        id="auth-btn"
+        style="
+          width:100%;padding:14px;
+          background:linear-gradient(135deg,#f5c842,#1a6b35);
+          border:none;border-radius:12px;
+          color:#061c0e;font-size:1rem;font-weight:800;
+          font-family:'Sora',sans-serif;cursor:pointer;
+          letter-spacing:1px;text-transform:uppercase;
+          transition:opacity .2s;
+        "
+      >Entrar</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  function tryLogin(){
+    const val = document.getElementById('auth-input').value;
+    if(val === SENHA){
+      sessionStorage.setItem(SESSION_KEY,'ok');
+      overlay.style.opacity = '0';
+      overlay.style.transition = 'opacity .5s';
+      setTimeout(()=>{
+        overlay.remove();
+        document.getElementById('loading').style.display = 'flex';
+        init();
+      }, 500);
+    } else {
+      const err = document.getElementById('auth-error');
+      const inp = document.getElementById('auth-input');
+      err.textContent = '❌ Senha incorreta. Tente novamente.';
+      inp.style.borderColor = '#e53935';
+      inp.value = '';
+      setTimeout(()=>{
+        err.textContent = '';
+        inp.style.borderColor = 'rgba(46,204,113,.35)';
+      }, 2500);
+    }
+  }
+
+  document.getElementById('auth-btn').addEventListener('click', tryLogin);
+  document.getElementById('auth-input').addEventListener('keydown', e=>{
+    if(e.key === 'Enter') tryLogin();
+  });
+  document.getElementById('auth-input').addEventListener('focus', function(){
+    this.style.borderColor = '#f5c842';
+  });
+  document.getElementById('auth-input').addEventListener('blur', function(){
+    this.style.borderColor = 'rgba(46,204,113,.35)';
+  });
+})();
+
+/* ── AUTO-REFRESH ────────────────────────────────────── */
+setInterval(init, 5*60*1000);
+
 </script>
 </body>
 </html>
