@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>COPA CS 2026 — Visão Geral</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 /* ── TOKENS ─────────────────────────────────────────── */
@@ -22,7 +23,7 @@ html{scroll-behavior:smooth}
 /* ── BODY & BG ───────────────────────────────────────── */
 body{
   background:var(--gd);
-  font-family:'Segoe UI',system-ui,Arial,sans-serif;
+  font-family:'Sora',system-ui,Arial,sans-serif;
   color:var(--tl);min-height:100vh;overflow-x:hidden;
 }
 #bg-canvas{
@@ -119,7 +120,7 @@ header::after{
 }
 @keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 
-/* ── FRENTE BAR ──────────────────────────────────────── */
+/* ── NAV BAR (PÁGINAS) ───────────────────────────────── */
 .fbar{
   background:rgba(6,28,14,.8);
   backdrop-filter:blur(10px);
@@ -134,6 +135,7 @@ header::after{
   background:transparent;color:var(--tm);
   border-radius:40px;cursor:pointer;
   font-size:.88rem;font-weight:600;
+  font-family:'Sora',sans-serif;
   transition:all .25s cubic-bezier(.34,1.56,.64,1);
   position:relative;overflow:hidden;
 }
@@ -154,11 +156,16 @@ header::after{
   background:var(--glass);color:var(--tl);
   border:1.5px solid var(--border2);border-radius:10px;
   font-size:.88rem;cursor:pointer;
+  font-family:'Sora',sans-serif;
   backdrop-filter:blur(10px);
   transition:border-color .2s;
 }
 #psel:hover{border-color:var(--gold)}
 #psel option{background:var(--gf);color:var(--tl)}
+
+/* ── PAGES ───────────────────────────────────────────── */
+.page{display:none}
+.page.active{display:block}
 
 /* ── MAIN ────────────────────────────────────────────── */
 main{padding:32px 40px;max-width:1700px;margin:0 auto}
@@ -212,8 +219,6 @@ main{padding:32px 40px;max-width:1700px;margin:0 auto}
   background:linear-gradient(135deg,rgba(80,10,10,.8),rgba(140,20,20,.4));
 }
 .card.danger:hover{box-shadow:var(--sh),0 0 40px rgba(229,57,53,.3)}
-
-/* ── CARD GLOW RING ──────────────────────────────────── */
 .card-glow{
   position:absolute;top:-40px;right:-40px;
   width:160px;height:160px;border-radius:50%;
@@ -222,7 +227,6 @@ main{padding:32px 40px;max-width:1700px;margin:0 auto}
 .goldc .card-glow{background:var(--gold)}
 .danger .card-glow{background:var(--red)}
 .card:not(.goldc):not(.danger) .card-glow{background:var(--gl)}
-
 .c-ico{font-size:2.2rem;margin-bottom:10px;display:block}
 .c-lbl{
   font-size:.72rem;text-transform:uppercase;letter-spacing:2px;
@@ -264,6 +268,71 @@ main{padding:32px 40px;max-width:1700px;margin:0 auto}
   min-height:300px;position:relative;
 }
 canvas{width:100%!important}
+
+/* ── PÓDIO ───────────────────────────────────────────── */
+.podium-wrap{
+  display:flex;align-items:flex-end;justify-content:center;
+  gap:16px;margin-bottom:40px;padding:32px 0 0;
+}
+.podium-slot{
+  display:flex;flex-direction:column;align-items:center;
+  gap:10px;flex:1;max-width:220px;
+}
+.podium-avatar{
+  width:72px;height:72px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;font-weight:900;
+  border:3px solid transparent;
+  box-shadow:var(--sh);
+  animation:avatarFloat 3s ease-in-out infinite;
+}
+.podium-slot:nth-child(1) .podium-avatar{
+  border-color:#c0c0c0;background:linear-gradient(135deg,#2a2a2a,#444);
+  animation-delay:.3s;
+}
+.podium-slot:nth-child(2) .podium-avatar{
+  border-color:var(--gold);background:linear-gradient(135deg,#3a2e00,#6b5500);
+  width:88px;height:88px;font-size:2.1rem;
+  box-shadow:var(--sh),0 0 30px rgba(245,200,66,.4);
+}
+.podium-slot:nth-child(3) .podium-avatar{
+  border-color:#cd7f32;background:linear-gradient(135deg,#2a1800,#4a3000);
+  animation-delay:.6s;
+}
+@keyframes avatarFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+.podium-medal{font-size:2rem;line-height:1}
+.podium-name{
+  font-weight:800;font-size:.95rem;text-align:center;
+  color:var(--wh);
+}
+.podium-score{
+  font-size:.82rem;font-weight:700;
+  color:var(--gold);
+}
+.podium-block{
+  border-radius:12px 12px 0 0;width:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;font-weight:900;color:rgba(255,255,255,.2);
+  min-height:60px;
+}
+.podium-slot:nth-child(1) .podium-block{
+  min-height:80px;
+  background:linear-gradient(180deg,rgba(192,192,192,.25),rgba(192,192,192,.08));
+  border:1px solid rgba(192,192,192,.25);
+}
+.podium-slot:nth-child(2) .podium-block{
+  min-height:120px;
+  background:linear-gradient(180deg,rgba(245,200,66,.25),rgba(245,200,66,.08));
+  border:1px solid rgba(245,200,66,.3);
+}
+.podium-slot:nth-child(3) .podium-block{
+  min-height:60px;
+  background:linear-gradient(180deg,rgba(205,127,50,.25),rgba(205,127,50,.08));
+  border:1px solid rgba(205,127,50,.25);
+}
 
 /* ── RANKING TABLE ───────────────────────────────────── */
 .rtable{width:100%;border-collapse:collapse}
@@ -344,7 +413,7 @@ footer{
   border-top:1px solid var(--border);margin-top:40px;
 }
 
-/* ── SCROLL BAR ──────────────────────────────────────── */
+/* ── SCROLLBAR ───────────────────────────────────────── */
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:var(--gd)}
 ::-webkit-scrollbar-thumb{background:var(--gm);border-radius:3px}
@@ -358,6 +427,7 @@ footer{
   .fbar{padding:10px 16px}
   header{padding:14px 16px}
   .c-val{font-size:2.2rem}
+  .podium-wrap{gap:8px}
 }
 </style>
 </head>
@@ -398,13 +468,12 @@ footer{
   </div>
 </header>
 
-<!-- FRENTE BAR -->
+<!-- NAV BAR -->
 <div class="fbar">
-  <button class="fbtn active" data-f="Geral"><span>🏆 Geral</span></button>
-  <button class="fbtn" data-f="Implantação"><span>🚀 Implantação</span></button>
-  <button class="fbtn" data-f="Suporte"><span>🎧 Suporte</span></button>
-  <button class="fbtn" data-f="KA"><span>🤝 KA</span></button>
-  <button class="fbtn" data-f="Retenção"><span>🔒 Retenção</span></button>
+  <button class="fbtn active" data-page="p1"><span>⚽ Placar</span></button>
+  <button class="fbtn" data-page="p2"><span>📈 Ritmo de Jogo</span></button>
+  <button class="fbtn" data-page="p3"><span>🥇 Artilharia</span></button>
+  <button class="fbtn" data-page="p4"><span>🧠 Análise do Técnico</span></button>
   <select id="psel">
     <option value="month">📅 Mês Atual</option>
     <option value="7d">Últimos 7 dias</option>
@@ -414,95 +483,116 @@ footer{
   </select>
 </div>
 
-<!-- MAIN -->
-<main>
-
-  <!-- PLACAR -->
-  <section class="sgap">
-    <div class="stitle">⚽ Placar do Jogo</div>
-    <div class="g3">
-      <div class="card goldc">
-        <div class="card-glow"></div>
-        <span class="c-ico">⚽</span>
-        <div class="c-lbl">Gols Marcados</div>
-        <div class="c-val" id="vgols">—</div>
-        <div class="c-sub">Jornadas concluídas no período</div>
-        <div class="delta" id="dgols"></div>
+<!-- ═══════════════════════════════════════════════════
+     PÁGINA 1 — PLACAR + POSSE DE BOLA
+════════════════════════════════════════════════════ -->
+<div class="page active" id="p1">
+  <main>
+    <section class="sgap">
+      <div class="stitle">⚽ Placar do Jogo</div>
+      <div class="g3">
+        <div class="card goldc">
+          <div class="card-glow"></div>
+          <span class="c-ico">⚽</span>
+          <div class="c-lbl">Gols Marcados</div>
+          <div class="c-val" id="vgols">—</div>
+          <div class="c-sub">Jornadas concluídas no período</div>
+          <div class="delta" id="dgols"></div>
+        </div>
+        <div class="card">
+          <div class="card-glow"></div>
+          <span class="c-ico">🎯</span>
+          <div class="c-lbl">Assistências · CSAT Médio</div>
+          <div class="c-val" id="vcsat">—</div>
+          <div class="c-sub">Meta: ≥ 4,0 · Fonte: CSAT Pliq</div>
+          <div class="delta" id="dcsat"></div>
+        </div>
+        <div class="card danger">
+          <div class="card-glow"></div>
+          <span class="c-ico">🟥</span>
+          <div class="c-lbl">Gols Sofridos · Churn</div>
+          <div class="c-val" id="vchurn">—</div>
+          <div class="c-sub">Cancelamentos / contas perdidas</div>
+          <div class="delta" id="dchurn"></div>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-glow"></div>
-        <span class="c-ico">🎯</span>
-        <div class="c-lbl">Assistências · CSAT Médio</div>
-        <div class="c-val" id="vcsat">—</div>
-        <div class="c-sub">Meta: ≥ 4,0 · Fonte: CSAT Pliq</div>
-        <div class="delta" id="dcsat"></div>
+    </section>
+    <section class="sgap">
+      <div class="stitle">🏃 Posse de Bola — KPIs Operacionais</div>
+      <div class="g4" id="posse-grid"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PÁGINA 2 — RITMO DE JOGO
+════════════════════════════════════════════════════ -->
+<div class="page" id="p2">
+  <main>
+    <section class="sgap">
+      <div class="stitle">📈 Ritmo de Jogo — Evolução Mensal</div>
+      <div class="g2">
+        <div class="cw"><canvas id="cRitmo"></canvas></div>
+        <div class="cw"><canvas id="cCsat"></canvas></div>
       </div>
-      <div class="card danger">
-        <div class="card-glow"></div>
-        <span class="c-ico">🟥</span>
-        <div class="c-lbl">Gols Sofridos · Churn</div>
-        <div class="c-val" id="vchurn">—</div>
-        <div class="c-sub">Cancelamentos / contas perdidas</div>
-        <div class="delta" id="dchurn"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PÁGINA 3 — ARTILHARIA / RANKING
+════════════════════════════════════════════════════ -->
+<div class="page" id="p3">
+  <main>
+    <section class="sgap">
+      <div class="stitle">🥇 Artilharia do Mês — Pódio</div>
+
+      <!-- PÓDIO -->
+      <div class="podium-wrap" id="podium-wrap">
+        <!-- preenchido via JS -->
       </div>
-    </div>
-  </section>
 
-  <!-- POSSE DE BOLA -->
-  <section class="sgap">
-    <div class="stitle">🏃 Posse de Bola — KPIs Operacionais</div>
-    <div class="g4" id="posse-grid"></div>
-  </section>
+      <!-- RANKING COMPLETO -->
+      <div class="stitle" style="margin-top:8px">📋 Ranking Completo</div>
+      <div style="background:var(--glass);backdrop-filter:blur(16px);border-radius:var(--rd2);border:1px solid var(--border);overflow:hidden">
+        <table class="rtable">
+          <thead>
+            <tr>
+              <th>#</th><th>CSM</th><th>Score</th>
+              <th>Jornadas</th><th>CSAT</th><th>Saúde</th>
+            </tr>
+          </thead>
+          <tbody id="rank-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
 
-  <!-- RITMO -->
-  <section class="sgap">
-    <div class="stitle">📈 Ritmo de Jogo — Evolução Mensal</div>
-    <div class="g2">
-      <div class="cw"><canvas id="cRitmo"></canvas></div>
-      <div class="cw"><canvas id="cCsat"></canvas></div>
-    </div>
-  </section>
-
-  <!-- RANKING -->
-  <section class="sgap">
-    <div class="stitle">🥇 Artilharia do Mês — Top Ranking</div>
-    <div style="background:var(--glass);backdrop-filter:blur(16px);border-radius:var(--rd2);border:1px solid var(--border);overflow:hidden">
-      <table class="rtable">
-        <thead>
-          <tr>
-            <th>#</th><th>CSM</th><th>Score</th>
-            <th>Jornadas</th><th>CSAT</th><th>Saúde</th>
-          </tr>
-        </thead>
-        <tbody id="rank-body"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- INSIGHTS -->
-  <section class="sgap">
-    <div class="stitle">🧠 Análise do Técnico</div>
-    <div class="igrid" id="ins-grid"></div>
-  </section>
-
-  <!-- ALERTAS -->
-  <section class="sgap">
-    <div class="stitle">🚨 VAR — Alertas Operacionais</div>
-    <div class="alist" id="alert-list"></div>
-  </section>
-
-  <!-- DESEMPENHO -->
-  <section class="sgap">
-    <div class="stitle">📊 Desempenho por Rodada</div>
-    <div style="background:var(--glass);backdrop-filter:blur(16px);border-radius:var(--rd2);border:1px solid var(--border);overflow:hidden;overflow-x:auto">
-      <table class="rtable">
-        <thead id="perf-head"></thead>
-        <tbody id="perf-body"></tbody>
-      </table>
-    </div>
-  </section>
-
-</main>
+<!-- ═══════════════════════════════════════════════════
+     PÁGINA 4 — ANÁLISE + VAR + DESEMPENHO
+════════════════════════════════════════════════════ -->
+<div class="page" id="p4">
+  <main>
+    <section class="sgap">
+      <div class="stitle">🧠 Análise do Técnico</div>
+      <div class="igrid" id="ins-grid"></div>
+    </section>
+    <section class="sgap">
+      <div class="stitle">🚨 VAR — Alertas Operacionais</div>
+      <div class="alist" id="alert-list"></div>
+    </section>
+    <section class="sgap">
+      <div class="stitle">📊 Desempenho por Rodada</div>
+      <div style="background:var(--glass);backdrop-filter:blur(16px);border-radius:var(--rd2);border:1px solid var(--border);overflow:hidden;overflow-x:auto">
+        <table class="rtable">
+          <thead id="perf-head"></thead>
+          <tbody id="perf-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
 
 <footer>Copa CS 2026 · Customer Success · Dados ao vivo · <span id="fts"></span></footer>
 
@@ -515,69 +605,50 @@ footer{
 
 /* ── BACKGROUND ANIMATION ────────────────────────────── */
 (function initBG(){
-  const cvs = document.getElementById('bg-canvas');
-  const ctx = cvs.getContext('2d');
-  let W, H, particles = [];
+  const cvs=document.getElementById('bg-canvas');
+  const ctx=cvs.getContext('2d');
+  let W,H,particles=[];
 
-  function resize(){
-    W = cvs.width  = window.innerWidth;
-    H = cvs.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resize);
+  function resize(){W=cvs.width=window.innerWidth;H=cvs.height=window.innerHeight}
+  window.addEventListener('resize',resize);
   resize();
 
-  // Create particles — mix of dots and tiny hexagons
-  function mkParticle(){
-    return {
-      x: Math.random()*W, y: Math.random()*H,
-      vx: (Math.random()-.5)*.4, vy: (Math.random()-.5)*.4,
-      r: Math.random()*2.5+.5,
-      alpha: Math.random()*.5+.1,
-      color: Math.random()>.6 ? '#f5c842' : '#2ecc71',
-      pulse: Math.random()*Math.PI*2,
-      pulseSpeed: Math.random()*.02+.005
+  function mkP(){
+    return{
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,
+      r:Math.random()*2.5+.5,
+      alpha:Math.random()*.5+.1,
+      color:Math.random()>.6?'#f5c842':'#2ecc71',
+      pulse:Math.random()*Math.PI*2,
+      pulseSpeed:Math.random()*.02+.005
     };
   }
+  for(let i=0;i<120;i++)particles.push(mkP());
 
-  for(let i=0;i<120;i++) particles.push(mkParticle());
-
-  // Draw grass lines (subtle field)
   function drawField(){
     ctx.save();
-    const stripeW = W/12;
+    const sw=W/12;
     for(let i=0;i<12;i++){
-      ctx.fillStyle = i%2===0
-        ? 'rgba(14,61,28,0.18)'
-        : 'rgba(6,28,14,0.08)';
-      ctx.fillRect(i*stripeW,0,stripeW,H);
+      ctx.fillStyle=i%2===0?'rgba(14,61,28,0.18)':'rgba(6,28,14,0.08)';
+      ctx.fillRect(i*sw,0,sw,H);
     }
-    // Center circle (very faint)
-    ctx.strokeStyle='rgba(46,204,113,0.04)';
-    ctx.lineWidth=1;
-    ctx.beginPath();
-    ctx.arc(W/2,H/2,Math.min(W,H)*.22,0,Math.PI*2);
-    ctx.stroke();
-    // Center line
-    ctx.beginPath();
-    ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);
-    ctx.stroke();
+    ctx.strokeStyle='rgba(46,204,113,0.04)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(W/2,H/2,Math.min(W,H)*.22,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();
     ctx.restore();
   }
 
-  function drawConnections(){
+  function drawConns(){
     for(let i=0;i<particles.length;i++){
       for(let j=i+1;j<particles.length;j++){
-        const dx=particles[i].x-particles[j].x;
-        const dy=particles[i].y-particles[j].y;
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
         const dist=Math.sqrt(dx*dx+dy*dy);
         if(dist<120){
           ctx.save();
           ctx.strokeStyle=`rgba(46,204,113,${.06*(1-dist/120)})`;
           ctx.lineWidth=.6;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x,particles[i].y);
-          ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.stroke();
+          ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();
           ctx.restore();
         }
       }
@@ -586,44 +657,27 @@ footer{
 
   function tick(){
     ctx.clearRect(0,0,W,H);
-    drawField();
-    drawConnections();
-
+    drawField();drawConns();
     particles.forEach(p=>{
-      p.x+=p.vx; p.y+=p.vy;
-      p.pulse+=p.pulseSpeed;
-      const a = p.alpha*(0.7+0.3*Math.sin(p.pulse));
-
-      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
-      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
-
-      ctx.save();
-      ctx.globalAlpha=a;
-      ctx.fillStyle=p.color;
-      ctx.shadowColor=p.color;
-      ctx.shadowBlur=8;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fill();
-      ctx.restore();
+      p.x+=p.vx;p.y+=p.vy;p.pulse+=p.pulseSpeed;
+      const a=p.alpha*(0.7+0.3*Math.sin(p.pulse));
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.save();ctx.globalAlpha=a;ctx.fillStyle=p.color;
+      ctx.shadowColor=p.color;ctx.shadowBlur=8;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.restore();
     });
-
     requestAnimationFrame(tick);
   }
   tick();
 })();
 
 /* ── CONFIG ──────────────────────────────────────────── */
-const CFG = {
-  id: '1OZ6fVR8IZ9FStDWJKIUmoD2afTVrBSELHgL7-tcbFAc',
-  gids: {
-    ex:'904603447', cp:'1728482631',
-    cs:'890603812', su:'1448118737',
-    ka:'451613627', re:'727905600'
-  },
-  meta: { csatG:4.0, csatI:4.7, csatS:4.6, sla:30, maxC:0.25 },
-  rw:   { gols:.35, csat:.25, saude:.25, eng:.15 },
-  ism: {
+const CFG={
+  id:'1OZ6fVR8IZ9FStDWJKIUmoD2afTVrBSELHgL7-tcbFAc',
+  gids:{ex:'904603447',cp:'1728482631',cs:'890603812',su:'1448118737',ka:'451613627',re:'727905600'},
+  meta:{csatG:4.0,csatI:4.7,csatS:4.6,sla:30,maxC:0.25},
+  rw:{gols:.35,csat:.25,saude:.25,eng:.15},
+  ism:{
     'Gabriel Sales':'Gabriel Sales','Sales':'Gabriel Sales',
     'Ana Luisa':'Ana Luisa','Ana':'Ana Luisa',
     'Lorran':'Lorran','lorran':'Lorran',
@@ -646,10 +700,10 @@ const CFG = {
   }
 };
 
-const ST = {
-  frente:'Geral', period:'month',
-  raw:{ ex:[], cp:[], cs:[] },
-  prev:{ g:null, c:null, h:null }
+const ST={
+  page:'p1',period:'month',
+  raw:{ex:[],cp:[],cs:[]},
+  prev:{g:null,c:null,h:null}
 };
 
 /* ── UTILS ───────────────────────────────────────────── */
@@ -657,19 +711,14 @@ function gvDate(v){
   if(v==null||v==='')return null;
   if(typeof v==='number')return new Date(Math.round((v-25569)*86400000));
   const s=String(v).trim();
-  if(s.startsWith('Date(')){
-    const m=s.match(/Date\((\d+),(\d+),(\d+)/);
-    if(m)return new Date(+m[1],+m[2],+m[3]);
-  }
-  let m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if(m)return new Date(+m[3],+m[2]-1,+m[1]);
-  m=s.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if(m)return new Date(+m[1],+m[2]-1,+m[3]);
+  if(s.startsWith('Date(')){const m=s.match(/Date\((\d+),(\d+),(\d+)/);if(m)return new Date(+m[1],+m[2],+m[3]);}
+  let m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);if(m)return new Date(+m[3],+m[2]-1,+m[1]);
+  m=s.match(/^(\d{4})-(\d{2})-(\d{2})/);if(m)return new Date(+m[1],+m[2]-1,+m[3]);
   return null;
 }
 
 function getRange(p){
-  const t=new Date(); const d=new Date(t.getFullYear(),t.getMonth(),t.getDate());
+  const t=new Date();const d=new Date(t.getFullYear(),t.getMonth(),t.getDate());
   if(p==='7d'){const s=new Date(d);s.setDate(s.getDate()-6);return{s,e:d}}
   if(p==='15d'){const s=new Date(d);s.setDate(s.getDate()-14);return{s,e:d}}
   if(p==='1m')return{s:new Date(d.getFullYear(),d.getMonth()-1,1),e:new Date(d.getFullYear(),d.getMonth(),0)};
@@ -683,26 +732,25 @@ function inR(d,r){
   return x>=r.s&&x<=r.e;
 }
 
-function nIsm(v){
-  if(!v)return '';
-  const t=v.trim();
-  return CFG.ism[t]||t;
-}
-
+function nIsm(v){if(!v)return '';const t=v.trim();return CFG.ism[t]||t}
 function avg(a){return a.length?a.reduce((x,y)=>x+y,0)/a.length:null}
 function pct(v,t){return t?Math.round(v/t*100):0}
 function fs(n){return n==null?'—':(+n).toFixed(1)}
 
+function initials(name){
+  return name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+}
+
 /* ── ANIMATED COUNTER ────────────────────────────────── */
-function animCount(el, target, isFloat=false, duration=900){
-  const start = performance.now();
-  const from = parseFloat(el.textContent) || 0;
+function animCount(el,target,isFloat=false,duration=900){
+  const start=performance.now();
+  const from=parseFloat(el.textContent)||0;
   function step(now){
-    const p = Math.min((now-start)/duration, 1);
-    const ease = 1-Math.pow(1-p,3);
-    const val = from + (target-from)*ease;
-    el.textContent = isFloat ? val.toFixed(2) : Math.round(val);
-    if(p<1) requestAnimationFrame(step);
+    const p=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-p,3);
+    const val=from+(target-from)*ease;
+    el.textContent=isFloat?val.toFixed(2):Math.round(val);
+    if(p<1)requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
 }
@@ -730,7 +778,7 @@ function procEx(rows){
     const st=String(r['Status']||'').toLowerCase();
     const csm=nIsm(r['CSM Responsavel']||r['CSM Responsável']||r['CSM']||'');
     return{
-      nome:r['Nome']||'', csm, date:d,
+      nome:r['Nome']||'',csm,date:d,
       isG:j.includes('jornada conclu'),
       isCh:st.includes('cancelado')||st.includes('solicitou cancelamento')||j.includes('cancelado')
     };
@@ -744,18 +792,6 @@ function procCp(rows){
     const csm=nIsm(r['Respondente']||r['ISM']||r['CSM']||'');
     return{csm,date:gvDate(dv),nota:isNaN(nota)?null:nota};
   }).filter(r=>r.nota!=null);
-}
-
-function filterFrente(rows,f){
-  if(f==='Geral')return rows;
-  const mp={
-    'Implantação':['lorran','barbara'],
-    'Suporte':['elivelton','eliziane','felipe','lucas','josimar','vitor','raiane','welder'],
-    'KA':['katarina','ana paula','maria gabriela','rebecka'],
-    'Retenção':['wallison','nilza','regis']
-  };
-  const ks=mp[f]||[];
-  return rows.filter(r=>ks.some(k=>(r.csm||'').toLowerCase().includes(k)));
 }
 
 /* ── KPIs ────────────────────────────────────────────── */
@@ -799,7 +835,7 @@ function calcRanking(ex,cp){
   }).sort((a,b)=>b.sc-a.sc);
 }
 
-/* ── INSIGHTS & ALERTS ───────────────────────────────── */
+/* ── INSIGHTS ────────────────────────────────────────── */
 function calcIns(k,rk){
   const ins=[];
   if(rk.length)ins.push({t:'info',tx:`🏆 Líder: <strong>${rk[0].name}</strong> — score <strong>${fs(rk[0].sc)}</strong>. Referência da equipe!`});
@@ -818,6 +854,7 @@ function calcIns(k,rk){
   return ins;
 }
 
+/* ── ALERTS ──────────────────────────────────────────── */
 function calcAlerts(k,rk){
   const al=[];
   if(k.churn>0)al.push({t:'d',i:'🟥',tx:`<strong>${k.churn} churn(s)</strong> detectados. Revisar imediatamente!`});
@@ -841,9 +878,7 @@ function bRitmo(rows){
     if(!r.date)return;
     const k=`${r.date.getFullYear()}-${String(r.date.getMonth()+1).padStart(2,'0')}`;
     if(!m[k])m[k]={gols:0,tot:0,churn:0};
-    m[k].tot++;
-    if(r.isG)m[k].gols++;
-    if(r.isCh)m[k].churn++;
+    m[k].tot++;if(r.isG)m[k].gols++;if(r.isCh)m[k].churn++;
   });
   const mn=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   const ks=Object.keys(m).sort();
@@ -858,8 +893,7 @@ function bCsatData(rows){
   rows.forEach(r=>{
     if(!r.date||r.nota==null)return;
     const k=`${r.date.getFullYear()}-${String(r.date.getMonth()+1).padStart(2,'0')}`;
-    if(!m[k])m[k]=[];
-    m[k].push(r.nota);
+    if(!m[k])m[k]=[];m[k].push(r.nota);
   });
   const mn=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   const ks=Object.keys(m).sort();
@@ -874,20 +908,17 @@ let cR=null,cC=null;
 function renderCharts(ri,cd){
   if(cR)cR.destroy();
   if(cC)cC.destroy();
-
   Chart.defaults.color='#a0c8b0';
   Chart.defaults.borderColor='rgba(255,255,255,.06)';
-
   const base={
     responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:'#d4f5e2',font:{size:11,weight:'500'},padding:16}}},
+    plugins:{legend:{labels:{color:'#d4f5e2',font:{size:11,weight:'500',family:'Sora'},padding:16}}},
     scales:{
-      x:{ticks:{color:'#a0c8b0',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}},
-      y:{ticks:{color:'#a0c8b0',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}}
+      x:{ticks:{color:'#a0c8b0',font:{size:10,family:'Sora'}},grid:{color:'rgba(255,255,255,.05)'}},
+      y:{ticks:{color:'#a0c8b0',font:{size:10,family:'Sora'}},grid:{color:'rgba(255,255,255,.05)'}}
     },
     animation:{duration:1000,easing:'easeOutQuart'}
   };
-
   cR=new Chart(document.getElementById('cRitmo').getContext('2d'),{
     type:'bar',
     data:{
@@ -898,9 +929,8 @@ function renderCharts(ri,cd){
         {label:'Churn',data:ri.churn,backgroundColor:'rgba(229,57,53,.65)',borderRadius:6,borderSkipped:false}
       ]
     },
-    options:{...base,plugins:{...base.plugins,title:{display:true,text:'Jornadas por Mês',color:'#f5c842',font:{size:13,weight:'bold'}}}}
+    options:{...base,plugins:{...base.plugins,title:{display:true,text:'Jornadas por Mês',color:'#f5c842',font:{size:13,weight:'bold',family:'Sora'}}}}
   });
-
   cC=new Chart(document.getElementById('cCsat').getContext('2d'),{
     type:'line',
     data:{
@@ -910,7 +940,7 @@ function renderCharts(ri,cd){
         {label:`Meta (${CFG.meta.csatG})`,data:cd.labels.map(()=>CFG.meta.csatG),borderColor:'rgba(229,57,53,.6)',borderDash:[6,4],pointRadius:0,fill:false}
       ]
     },
-    options:{...base,plugins:{...base.plugins,title:{display:true,text:'Evolução CSAT',color:'#f5c842',font:{size:13,weight:'bold'}}}}
+    options:{...base,plugins:{...base.plugins,title:{display:true,text:'Evolução CSAT',color:'#f5c842',font:{size:13,weight:'bold',family:'Sora'}}}}
   });
 }
 
@@ -931,29 +961,24 @@ function renderPlacar(k){
   const gEl=document.getElementById('vgols');
   const cEl=document.getElementById('vcsat');
   const hEl=document.getElementById('vchurn');
-
-  if(ST.prev.g!==null&&k.gols>ST.prev.g) trigAnim('gol');
-  if(ST.prev.h!==null&&k.churn>ST.prev.h) trigAnim('churn');
-  if(ST.prev.c!==null&&k.cm!=null&&k.cm!==ST.prev.c) trigAnim('csat');
-
+  if(ST.prev.g!==null&&k.gols>ST.prev.g)trigAnim('gol');
+  if(ST.prev.h!==null&&k.churn>ST.prev.h)trigAnim('churn');
+  if(ST.prev.c!==null&&k.cm!=null&&k.cm!==ST.prev.c)trigAnim('csat');
   setDelta('dgols',k.gols,ST.prev.g,false);
   setDelta('dcsat',k.cm,ST.prev.c,false);
   setDelta('dchurn',k.churn,ST.prev.h,true);
-
-  animCount(gEl, k.gols, false);
-  if(k.cm!=null) animCount(cEl, k.cm, true);
-  else cEl.textContent='—';
-  animCount(hEl, k.churn, false);
-
-  ST.prev.g=k.gols; ST.prev.c=k.cm; ST.prev.h=k.churn;
+  animCount(gEl,k.gols,false);
+  if(k.cm!=null)animCount(cEl,k.cm,true);else cEl.textContent='—';
+  animCount(hEl,k.churn,false);
+  ST.prev.g=k.gols;ST.prev.c=k.cm;ST.prev.h=k.churn;
 }
 
 function renderPosse(k){
   document.getElementById('posse-grid').innerHTML=[
     {l:'% Jornadas Concluídas',v:k.pC+'%',h:`${k.gols}/${k.tot} contas`,p:k.pC},
-    {l:'% Carteira Saudável',  v:k.pS+'%',h:'Contas sem churn',        p:k.pS},
+    {l:'% Carteira Saudável',  v:k.pS+'%',h:'Contas sem churn',p:k.pS},
     {l:'% CSAT ≥ Meta',        v:k.pCm!=null?k.pCm+'%':'—',h:`Meta: ${CFG.meta.csatG}`,p:k.pCm||0},
-    {l:'Total de Contas',      v:k.tot,h:'No período filtrado',        p:Math.min(k.tot,100)}
+    {l:'Total de Contas',      v:k.tot,h:'No período filtrado',p:Math.min(k.tot,100)}
   ].map(x=>`
     <div class="kc">
       <div class="k-lbl">${x.l}</div>
@@ -963,10 +988,36 @@ function renderPosse(k){
     </div>`).join('');
 }
 
+/* ── PÓDIO ───────────────────────────────────────────── */
+function renderPodium(rk){
+  const wrap=document.getElementById('podium-wrap');
+  if(!rk.length){wrap.innerHTML='<p style="opacity:.5;text-align:center;padding:40px">Sem dados para exibir</p>';return;}
+
+  // Ordem visual: 2º lugar à esquerda, 1º no centro, 3º à direita
+  const order=[rk[1]||null, rk[0]||null, rk[2]||null];
+  const medals=['🥈','🥇','🥉'];
+  const slotClass=['','center',''];
+  const heights=['80px','120px','60px'];
+  const blockNums=['2','1','3'];
+
+  wrap.innerHTML=order.map((r,i)=>{
+    if(!r)return'';
+    const ini=initials(r.name);
+    return`
+      <div class="podium-slot">
+        <div class="podium-medal">${medals[i]}</div>
+        <div class="podium-avatar">${ini}</div>
+        <div class="podium-name">${r.name}</div>
+        <div class="podium-score">Score ${fs(r.sc)} · ${r.gols} gols</div>
+        <div class="podium-block" style="min-height:${heights[i]}">${blockNums[i]}</div>
+      </div>`;
+  }).join('');
+}
+
 function renderRanking(rk){
   const maxSc=rk.length?rk[0].sc:100;
   const medals=['g','s','b'];
-  document.getElementById('rank-body').innerHTML=rk.slice(0,5).map((r,i)=>`
+  document.getElementById('rank-body').innerHTML=rk.map((r,i)=>`
     <tr>
       <td><span class="rpos ${medals[i]||''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1)}</span></td>
       <td>
@@ -1088,13 +1139,14 @@ function trigAnim(tp){
 function renderAll(){
   const r=getRange(ST.period);
   const allCp=[...ST.raw.cp,...ST.raw.cs];
-  const exF=filterFrente(ST.raw.ex.filter(x=>inR(x.date,r)),ST.frente);
+  const exF=ST.raw.ex.filter(x=>inR(x.date,r));
   const cpF=allCp.filter(x=>inR(x.date,r));
   const k=calcKpis(exF,cpF);
   const rk=calcRanking(exF,cpF);
   renderPlacar(k);
   renderPosse(k);
-  renderCharts(bRitmo(filterFrente(ST.raw.ex,ST.frente)),bCsatData(allCp));
+  renderCharts(bRitmo(ST.raw.ex),bCsatData(allCp));
+  renderPodium(rk);
   renderRanking(rk);
   renderIns(calcIns(k,rk));
   renderAlerts(calcAlerts(k,rk));
@@ -1124,31 +1176,41 @@ async function init(){
       <div style="color:#e53935;text-align:center;padding:40px;font-size:1rem;max-width:400px">
         ⚠️ Erro ao carregar dados<br>
         <small style="opacity:.65;display:block;margin:8px 0">${e.message}</small>
-        <button onclick="init()" style="margin-top:16px;padding:12px 28px;background:var(--gold);color:#061c0e;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:.95rem">
+        <button onclick="init()" style="margin-top:16px;padding:12px 28px;background:var(--gold);color:#061c0e;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:.95rem;font-family:'Sora',sans-serif">
           ↺ Tentar Novamente
         </button>
       </div>`;
   }
 }
 
-/* ── EVENTS ──────────────────────────────────────────── */
+/* ── PAGE NAVIGATION ─────────────────────────────────── */
 document.querySelectorAll('.fbtn').forEach(b=>{
   b.addEventListener('click',()=>{
     document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));
     b.classList.add('active');
-    ST.frente=b.dataset.f;
-    renderAll();
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(b.dataset.page).classList.add('active');
+    ST.page=b.dataset.page;
+    // Re-render charts when switching to page 2
+    if(ST.page==='p2'){
+      const allCp=[...ST.raw.cp,...ST.raw.cs];
+      renderCharts(bRitmo(ST.raw.ex),bCsatData(allCp));
+    }
   });
 });
 
+/* ── PERIOD FILTER ───────────────────────────────────── */
 document.getElementById('psel').addEventListener('change',e=>{
   ST.period=e.target.value;
   renderAll();
 });
 
-// Auto-refresh a cada 5 minutos
+/* ── AUTO-REFRESH ────────────────────────────────────── */
 setInterval(init,5*60*1000);
+
 init();
 </script>
 </body>
 </html>
+
+                          
