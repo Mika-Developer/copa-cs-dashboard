@@ -429,6 +429,79 @@ footer{
   .c-val{font-size:2.2rem}
   .podium-wrap{gap:8px}
 }
+  /* ── AVATARES COM FOTO ───────────────────────────────── */
+.av-wrap {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.av-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-weight: 900;
+  font-family: 'Sora', sans-serif;
+}
+
+/* Pódio — avatar maior */
+.podium-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid transparent;
+  box-shadow: var(--sh);
+  animation: avatarFloat 3s ease-in-out infinite;
+  font-size: 1.6rem;
+  font-weight: 900;
+}
+.podium-slot:nth-child(1) .podium-avatar {
+  border-color: #c0c0c0;
+  background: linear-gradient(135deg,#2a2a2a,#444);
+  animation-delay: .3s;
+}
+.podium-slot:nth-child(2) .podium-avatar {
+  width: 96px;
+  height: 96px;
+  border-color: var(--gold);
+  background: linear-gradient(135deg,#3a2e00,#6b5500);
+  box-shadow: var(--sh), 0 0 30px rgba(245,200,66,.4);
+}
+.podium-slot:nth-child(3) .podium-avatar {
+  border-color: #cd7f32;
+  background: linear-gradient(135deg,#2a1800,#4a3000);
+  animation-delay: .6s;
+}
+
+/* Ranking table — avatar pequeno */
+.rank-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .85rem;
+  font-weight: 700;
+  border: 2px solid rgba(255,255,255,.15);
+  flex-shrink: 0;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.rank-name-wrap {
+  display: flex;
+  align-items: center;
+}
 </style>
 </head>
 <body>
@@ -700,6 +773,33 @@ const CFG={
   }
 };
 
+  /* ── FOTOS DOS CSMs ──────────────────────────────────── */
+const FOTOS = {
+  'Gabriel Sales':      'https://drive.google.com/thumbnail?id=1oWKokmUeu8Ga0eN2d4FgdfdlZ-cTFX0X&sz=w200',
+  'Gabriel Vasconcelos':'https://drive.google.com/thumbnail?id=1BMItzgqn48uNyQGOJnlZYruehWsTq-6y&sz=w200',
+  'Maria Gabriela':     'https://drive.google.com/thumbnail?id=1GFOInVwHFIUu1hqRNMiMza7EkMPx6ry_&sz=w200',
+  'Lorran':             'https://drive.google.com/thumbnail?id=1TNChAHj2bEJWzDjrTZuESehvOk0yOw7i&sz=w200',
+  'Maria Rocha':        'https://drive.google.com/thumbnail?id=1Z7WL8Lj938ZBNENc7JCiGNPQSGGMyAuy&sz=w200',
+  'Nilza':              'https://drive.google.com/thumbnail?id=1AHAfRKL3-fDyIg_nmlO7CzQZA5NNIDjX&sz=w200',
+  'Ana Luisa':          'https://drive.google.com/thumbnail?id=1d48skddCUqpmQY3MVkUgDLxD0skXJWJW&sz=w200',
+  'Luana Maciel':       'https://drive.google.com/thumbnail?id=1XOzCqwcRM_43FnmSp4hG6AOfCT7HEuPP&sz=w200',
+  'Regis':              'https://drive.google.com/thumbnail?id=17IVl4mItXtme899hggcgjxJFEg7GkH_G&sz=w200',
+  'Rebecka':            'https://drive.google.com/thumbnail?id=1UFORrDpghIjIB_4yWSzVHDEAj2BZ-lCR&sz=w200',
+  'Luana Laise':        'https://drive.google.com/thumbnail?id=1ARn7JddY4eDU3TUmur2xg_JfDffCkzK4&sz=w200',
+  'Wallison':           'https://drive.google.com/thumbnail?id=1Evmn49q-HpOLo7yR_at5_6_hnb_Re8Pa&sz=w200'
+};
+
+/* Retorna foto ou fallback com iniciais */
+function getAvatar(name) {
+  const foto = FOTOS[name];
+  if (foto) {
+    return `<img src="${foto}"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+      <span class="av-initials" style="display:none">${initials(name)}</span>`;
+  }
+  return `<span class="av-initials">${initials(name)}</span>`;
+}
 const ST={
   page:'p1',period:'month',
   raw:{ex:[],cp:[],cs:[]},
@@ -988,48 +1088,51 @@ function renderPosse(k){
     </div>`).join('');
 }
 
-/* ── PÓDIO ───────────────────────────────────────────── */
-function renderPodium(rk){
-  const wrap=document.getElementById('podium-wrap');
-  if(!rk.length){wrap.innerHTML='<p style="opacity:.5;text-align:center;padding:40px">Sem dados para exibir</p>';return;}
+function renderPodium(rk) {
+  const wrap = document.getElementById('podium-wrap');
+  if (!rk.length) {
+    wrap.innerHTML = '<p style="opacity:.5;text-align:center;padding:40px">Sem dados para exibir</p>';
+    return;
+  }
+  const order  = [rk[1]||null, rk[0]||null, rk[2]||null];
+  const medals = ['🥈','🥇','🥉'];
+  const heights= ['80px','120px','60px'];
+  const nums   = ['2','1','3'];
 
-  // Ordem visual: 2º lugar à esquerda, 1º no centro, 3º à direita
-  const order=[rk[1]||null, rk[0]||null, rk[2]||null];
-  const medals=['🥈','🥇','🥉'];
-  const slotClass=['','center',''];
-  const heights=['80px','120px','60px'];
-  const blockNums=['2','1','3'];
-
-  wrap.innerHTML=order.map((r,i)=>{
-    if(!r)return'';
-    const ini=initials(r.name);
-    return`
+  wrap.innerHTML = order.map((r, i) => {
+    if (!r) return '';
+    return `
       <div class="podium-slot">
         <div class="podium-medal">${medals[i]}</div>
-        <div class="podium-avatar">${ini}</div>
+        <div class="podium-avatar">${getAvatar(r.name)}</div>
         <div class="podium-name">${r.name}</div>
         <div class="podium-score">Score ${fs(r.sc)} · ${r.gols} gols</div>
-        <div class="podium-block" style="min-height:${heights[i]}">${blockNums[i]}</div>
+        <div class="podium-block" style="min-height:${heights[i]}">${nums[i]}</div>
       </div>`;
   }).join('');
 }
-
-function renderRanking(rk){
-  const maxSc=rk.length?rk[0].sc:100;
-  const medals=['g','s','b'];
-  document.getElementById('rank-body').innerHTML=rk.map((r,i)=>`
+  
+function renderRanking(rk) {
+  const maxSc = rk.length ? rk[0].sc : 100;
+  const medals = ['g','s','b'];
+  document.getElementById('rank-body').innerHTML = rk.map((r, i) => `
     <tr>
       <td><span class="rpos ${medals[i]||''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1)}</span></td>
       <td>
-        <strong>${r.name}</strong>
-        <div class="score-bar" style="width:${Math.round(r.sc/maxSc*100)}%"></div>
+        <div class="rank-name-wrap">
+          <div class="rank-avatar">${getAvatar(r.name)}</div>
+          <div>
+            <strong>${r.name}</strong>
+            <div class="score-bar" style="width:${Math.round(r.sc/maxSc*100)}%"></div>
+          </div>
+        </div>
       </td>
       <td><span class="badge bgo">⚡ ${fs(r.sc)}</span></td>
       <td>${r.gols} ⚽</td>
-      <td>${r.ca!=null?r.ca.toFixed(2):'—'}</td>
+      <td>${r.ca != null ? r.ca.toFixed(2) : '—'}</td>
       <td><span class="badge ${r.saude>=.9?'bg':r.saude>=.7?'bgo':'br'}">${Math.round(r.saude*100)}%</span></td>
     </tr>`
-  ).join('')||'<tr><td colspan="6" style="text-align:center;opacity:.5;padding:24px">Sem dados suficientes para ranking</td></tr>';
+  ).join('') || '<tr><td colspan="6" style="text-align:center;opacity:.5;padding:24px">Sem dados suficientes</td></tr>';
 }
 
 function renderIns(ins){
