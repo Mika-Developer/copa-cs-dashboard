@@ -755,18 +755,18 @@ function animCount(el,target,isFloat=false,duration=900){
   requestAnimationFrame(step);
 }
 
-/* ── FETCH ───────────────────────────────────────────── */
-async function fetchSheet(gid){
-  const url=`https://docs.google.com/spreadsheets/d/${CFG.id}/gviz/tq?tqx=out:json&gid=${gid}`;
-  try{
-    const res=await fetch(url);
-    const txt=await res.text();
-    const json=JSON.parse(txt.replace(/^[^(]*\(/,'').replace(/\);\s*$/,''));
-    const cols=json.table.cols.map(c=>c.label||c.id||'');
-    return(json.table.rows||[]).map(r=>
-      Object.fromEntries(cols.map((c,i)=>[c,r.c[i]?(r.c[i].v!=null?r.c[i].v:(r.c[i].f||'')):''  ]))
-    );
-  }catch(e){console.warn('fetchSheet gid='+gid,e);return[]}
+/* ── FETCH via Apps Script (resolve CORS) ────────────── */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwXFe7ojIlEMnMfB4M2rJLWBZfnSrrA6MJLDsrNXEKc58QQ9cviV8C7V1FRL1hcicQz5A/exec';
+
+async function fetchSheet(gid) {
+  try {
+    const res = await fetch(`${SCRIPT_URL}?gid=${gid}`);
+    const json = await res.json();
+    return json.rows || [];
+  } catch(e) {
+    console.warn('fetchSheet error gid=' + gid, e);
+    return [];
+  }
 }
 
 /* ── PROCESSORS ──────────────────────────────────────── */
