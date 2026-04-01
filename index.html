@@ -770,14 +770,40 @@ const ST={page:'p1',period:'month',raw:{ex:[],cp:[],cs:[]},prev:{g:null,c:null,h
 /* ── UTILS ───────────────────────────────────────────── */
 function gvDate(v){
   if(v==null||v==='')return null;
+
+  // número serial Excel
   if(typeof v==='number')return new Date(Math.round((v-25569)*86400000));
+
+  // objeto Date do gviz: Date(year,month,day)
+  if(typeof v==='object'&&v!==null){
+    // ex: {"$date":"2025-01-03T03:00:00Z"}
+    if(v.$date)return new Date(v.$date);
+    return null;
+  }
+
   const s=String(v).trim();
-  if(s.startsWith('Date(')){const m=s.match(/Date\((\d+),(\d+),(\d+)/);if(m)return new Date(+m[1],+m[2],+m[3]);}
-  let m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);if(m)return new Date(+m[3],+m[2]-1,+m[1]);
-  m=s.match(/^(\d{4})-(\d{2})-(\d{2})/);if(m)return new Date(+m[1],+m[2]-1,+m[3]);
+
+  // formato gviz textual: Date(2025,0,3)
+  if(s.startsWith('Date(')){
+    const m=s.match(/Date\((\d+),(\d+),(\d+)/);
+    if(m)return new Date(+m[1],+m[2],+m[3]);
+  }
+
+  // JSON serializado como string: {"$date":"..."}
+  if(s.startsWith('{"$date"')){
+    try{const o=JSON.parse(s);if(o.$date)return new Date(o.$date);}catch(e){}
+  }
+
+  // ISO 8601: 2025-10-08T00:00:00.000Z  ou  2025-10-08
+  if(s.match(/^\d{4}-\d{2}-\d{2}/))return new Date(s);
+
+  // brasileiro: dd/mm/yyyy
+  let m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if(m)return new Date(+m[3],+m[2]-1,+m[1]);
+
   return null;
 }
-
+  
 /* ═══ ALTERAÇÃO 4 — getRange com novos períodos ═══ */
 function getRange(p){
   const t=new Date();
