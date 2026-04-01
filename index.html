@@ -492,14 +492,22 @@ footer{
   </div>
 </div>
 
-<!-- ═══ ALTERAÇÃO 1 — HEADER com logo Suri ═══ -->
+<!-- ═══ HEADER com logo Suri ═══ -->
 <header>
   <div class="h-left">
     <div class="h-logo">⚽</div>
-    <img
-      src="https://www.genspark.ai/api/files/s/ZFS7jtlm"
-      alt="Suri"
-      style="height:34px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.92;">
+    <svg height="34" viewBox="0 0 480 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- S -->
+      <path d="M20 110 C20 130 40 140 62 140 C90 140 108 124 108 102 C108 82 92 72 68 64 C46 56 32 48 32 30 C32 14 46 4 66 4 C84 4 98 14 98 30" stroke="white" stroke-width="18" stroke-linecap="round" fill="none"/>
+      <!-- Ü -->
+      <path d="M136 10 L136 96 C136 122 152 140 178 140 C204 140 220 122 220 96 L220 10" stroke="white" stroke-width="18" stroke-linecap="round" fill="none"/>
+      <circle cx="158" cy="0" r="10" fill="white"/>
+      <circle cx="198" cy="0" r="10" fill="white"/>
+      <!-- R -->
+      <path d="M248 140 L248 10 L286 10 C314 10 328 26 328 52 C328 76 314 92 286 92 L248 92 M286 92 L332 140" stroke="white" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- I -->
+      <line x1="362" y1="10" x2="362" y2="140" stroke="white" stroke-width="18" stroke-linecap="round"/>
+    </svg>
   </div>
   <div class="h-title">
     <h1>Copa CS 2026</h1>
@@ -639,12 +647,16 @@ footer{
 <div class="page" id="p4">
   <main>
     <section class="sgap">
-      <div class="stitle">🧠 Análise do Técnico</div>
-      <div class="igrid" id="ins-grid"></div>
-    </section>
-    <section class="sgap">
-      <div class="stitle">🚨 VAR — Alertas Operacionais</div>
-      <div class="alist" id="alert-list"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
+        <div>
+          <div class="stitle">🧠 Análise do Técnico</div>
+          <div class="igrid" id="ins-grid"></div>
+        </div>
+        <div>
+          <div class="stitle">🚨 VAR — Alertas Operacionais</div>
+          <div class="alist" id="alert-list"></div>
+        </div>
+      </div>
     </section>
     <section class="sgap">
       <div class="stitle">📊 Desempenho por Rodada</div>
@@ -664,12 +676,16 @@ footer{
 <div class="page" id="p5">
   <main>
     <section class="sgap">
-      <div class="stitle">🚨 VAR — Alertas Operacionais</div>
-      <div class="alist" id="alert-list-p5"></div>
-    </section>
-    <section class="sgap">
-      <div class="stitle">🧠 Insights Automáticos</div>
-      <div class="igrid" id="ins-grid-p5"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
+        <div>
+          <div class="stitle">🚨 VAR — Alertas Operacionais</div>
+          <div class="alist" id="alert-list-p5"></div>
+        </div>
+        <div>
+          <div class="stitle">🧠 Insights Automáticos</div>
+          <div class="igrid" id="ins-grid-p5"></div>
+        </div>
+      </div>
     </section>
   </main>
 </div>
@@ -1033,7 +1049,7 @@ function renderAll(){
   renderPodium(rk);renderRanking(rk);
   const ins=calcIns(k,rk);const al=calcAlerts(k,rk);
   renderIns(ins);renderAlerts(al);renderPerf(rk);
-  const ts=new Date().toLocaleString('pt-BR');sv('tsv','Atualizado: '+ts);sv('fts',ts);
+  const ts=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});sv('tsv','Atualizado: '+ts);sv('fts',ts);
 }
 
 /* ── INIT ────────────────────────────────────────────── */
@@ -1092,7 +1108,7 @@ document.getElementById('psel').addEventListener('change',e=>{ST.period=e.target
 })();
 
 /* ── AUTO-REFRESH ────────────────────────────────────── */
-setInterval(init,5*60*1000);
+setInterval(init, 60*1000);
 </script>
 </body>
 </html>
