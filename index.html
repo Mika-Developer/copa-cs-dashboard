@@ -1086,6 +1086,9 @@ async function init(){
     ST.raw.ex=procEx(rE);ST.raw.cp=procCp(rCp);ST.raw.cs=procCp(rCs);ST.raw.re=procRe(rRe);
     renderAll();ld.style.opacity='0';setTimeout(()=>ld.style.display='none',600);
   }catch(e){
+    ld.innerHTML=`<div style="color:#e53935;text-align:center;padding:40px;font-size:1rem;max-width:400px">⚠️ Erro ao carregar dados<br><small style="opacity:.65;display:block;margin:8px 0">${e.message}</small><button onclick="init()" style="margin-top:16px;padding:12px 28px;background:var(--gold);color:#061c0e;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:.95rem;font-family:'Sora',sans-serif">↺ Tentar Novamente</button></div>`;
+  }
+}
 
 /* ── PAGE NAVIGATION ─────────────────────────────────── */
 document.querySelectorAll('.fbtn').forEach(b=>{
