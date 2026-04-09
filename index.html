@@ -724,14 +724,22 @@ const CFG={
     'Maria Rocha':'Maria Rocha',
     'Nilza':'Nilza','nilza':'Nilza',
     'José':'José','Jose':'José',
-    'Regis':'Regis','regis':'Regis',
-    'David':'David','Paulo Vitor':'Paulo Vitor',
-    'Carolina':'Carolina','Barbara':'Barbara',
+    'Regis':'Regis','regis':'Regis','Régis':'Regis',
+    'David':'David Marques','David Marques':'David Marques',
+    'Paulo Vitor':'Paulo Vitor','Paulo Henrique':'Paulo Henrique',
+    'Carolina':'Ana Carolina','Ana Carolina':'Ana Carolina',
+    'Barbara':'Barbara','Bárbara':'Barbara',
     'Elivelton':'Elivelton','Eliziane':'Eliziane',
     'Felipe':'Felipe','Lucas':'Lucas',
     'Josimar':'Josimar','Vitor':'Vitor',
     'Raiane':'Raiane','Welder':'Welder',
-    'Ana Paula':'Ana Paula','Rebecka':'Rebecka'
+    'Ana Paula':'Ana Paula','Rebecka':'Rebecka',
+    'Gabriel Vas':'Gabriel Vasconcelos','Vasconcelos':'Gabriel Vasconcelos',
+    'Gabriel Vasconcelos':'Gabriel Vasconcelos',
+    'Danielle Gonzaga':'Danielle Gonzaga',
+    'Luana Maciel':'Luana Maciel','Luana Laise':'Luana Laise',
+    'Luiza':'Luiza','Mateus Vasconcelos':'Mateus Vasconcelos',
+    'Amanda Negreiros':'Amanda Negreiros'
   }
 };
 
@@ -757,7 +765,7 @@ function getAvatar(name){
   return`<span class="av-initials">${initials(name)}</span>`;
 }
 
-const ST={page:'p1',period:'month',raw:{ex:[],cp:[],cs:[]},prev:{g:null,c:null,h:null}};
+const ST={page:'p1',period:'month',raw:{ex:[],cp:[],cs:[],re:[]},prev:{g:null,c:null,h:null}};
 
 /* ── UTILS ───────────────────────────────────────────── */
 function gvDate(v){
@@ -861,29 +869,47 @@ function procEx(rows){
 function procCp(rows){
   return rows.map(r=>{
     const dv=r['Data da Resposta']||r['Data']||'';
-    const nota=parseFloat(String(r['Avaliação']||r['Nota']||r['nota']||'').replace(',','.'));
+    const notaRaw=r['Avaliação']||r['Nota']||r['nota']||r['4.Como você avalia a satisfação com nossos treinamentos?']||'';
+    const nota=parseFloat(String(notaRaw).replace(',','.'));
     const csm=nIsm(r['Respondente']||r['ISM']||r['CSM']||'');
     return{csm,date:gvDate(dv),nota:isNaN(nota)?null:nota};
   }).filter(r=>r.nota!=null);
 }
-
+  function procRe(rows){
+  return rows.map(r=>{
+    const dv=r['Criado em']||r['Data']||'';
+    const d=gvDate(dv);
+    const fase=String(r['Fase']||'').trim().toLowerCase();
+    const tipo=String(r['Tipo - Solicitação']||'').toLowerCase();
+    const csm=nIsm(r['Implantador']||'');
+    const nome=r['Nome']||'';
+    const valRaw=String(r['Valor']||'0').replace(/[R$\s]/g,'').replace('.','').replace(',','.');
+    const valor=parseFloat(valRaw)||0;
+    return{nome,csm,date:d,isChurn:fase==='churn',isAguardando:fase==='aguardando',tipo,valor};
+  }).filter(r=>r.nome);
+}
 /* ── KPIs ────────────────────────────────────────────── */
-function calcKpis(ex,cp){
+function calcKpis(ex,cp,re){
   const tot=ex.length,gols=ex.filter(r=>r.isG).length;
-  const churn=ex.filter(r=>r.isCh).length,saude=tot-churn;
+  const churnEx=ex.filter(r=>r.isCh).length;
+  const churnRe=re?re.filter(r=>r.isChurn).length:0;
+  const churn=churnEx+churnRe;
+  const saude=tot-churnEx;
   const ns=cp.map(r=>r.nota).filter(n=>n!=null);
   const cm=avg(ns);
   const pC=pct(gols,tot),pS=pct(saude,tot);
   const pCm=ns.length?pct(ns.filter(n=>n>=CFG.meta.csatG).length,ns.length):null;
   const cc={};ex.forEach(r=>{if(r.csm)cc[r.csm]=(cc[r.csm]||0)+1});
   const mc=tot?Math.max(...Object.values(cc).concat(0))/tot:0;
-  return{tot,gols,churn,saude,cm,pC,pS,pCm,mc,cc,ns};
+  const churnValor=re?re.filter(r=>r.isChurn).reduce((s,r)=>s+r.valor,0):0;
+  return{tot,gols,churn,churnRe,churnEx,saude,cm,pC,pS,pCm,mc,cc,ns,churnValor};
 }
 
 /* ── RANKING ─────────────────────────────────────────── */
-function calcRanking(ex,cp){
+function calcRanking(ex,cp,re){
   const csms={};
   ex.forEach(r=>{if(!r.csm)return;if(!csms[r.csm])csms[r.csm]={gols:0,tot:0,churn:0,ns:[]};csms[r.csm].tot++;if(r.isG)csms[r.csm].gols++;if(r.isCh)csms[r.csm].churn++});
+  if(re)re.forEach(r=>{if(!r.csm||!r.isChurn)return;if(!csms[r.csm])csms[r.csm]={gols:0,tot:0,churn:0,ns:[]};csms[r.csm].churn++});
   cp.forEach(r=>{if(!r.csm)return;if(!csms[r.csm])csms[r.csm]={gols:0,tot:0,churn:0,ns:[]};csms[r.csm].ns.push(r.nota)});
   const mg=Math.max(...Object.values(csms).map(c=>c.gols).concat(1));
   return Object.entries(csms).map(([name,c])=>{
@@ -900,7 +926,10 @@ function calcIns(k,rk){
   const ins=[];
   if(rk.length)ins.push({t:'info',tx:`🏆 Líder: <strong>${rk[0].name}</strong> — score <strong>${fs(rk[0].sc)}</strong>. Referência da equipe!`});
   if(k.cm!=null){if(k.cm>=CFG.meta.csatG)ins.push({t:'info',tx:`✅ CSAT médio <strong>${k.cm.toFixed(2)}</strong> acima da meta (${CFG.meta.csatG}). Excelente!`});else ins.push({t:'alert',tx:`⚠️ CSAT médio <strong>${k.cm.toFixed(2)}</strong> abaixo da meta ${CFG.meta.csatG}. Ação necessária.`})}
-  if(k.churn>0)ins.push({t:'alert',tx:`🟥 ${k.churn} churn(s) identificados — investigar urgente.`});
+  if(k.churn>0){
+  const vlTx=k.churnValor?` (R$ ${k.churnValor.toLocaleString('pt-BR',{minimumFractionDigits:2})})`:''
+  ins.push({t:'alert',tx:`🟥 ${k.churn} churn(s) identificados${vlTx} — investigar urgente.`});
+}
   if(k.mc>CFG.meta.maxC){const e=Object.entries(k.cc).sort((a,b)=>b[1]-a[1])[0];ins.push({t:'warn',tx:`⚖️ Concentração alta: <strong>${e[0]}</strong> com ${Math.round(k.mc*100)}% da carteira.`})}
   if(k.pC>=80)ins.push({t:'info',tx:`🚀 ${k.pC}% das jornadas concluídas — ritmo excelente!`});
   if(rk.length>1)ins.push({t:'warn',tx:`📊 Atenção: <strong>${rk[rk.length-1].name}</strong> com score baixo (${fs(rk[rk.length-1].sc)}).`});
@@ -911,7 +940,10 @@ function calcIns(k,rk){
 /* ── ALERTS ──────────────────────────────────────────── */
 function calcAlerts(k,rk){
   const al=[];
-  if(k.churn>0)al.push({t:'d',i:'🚨',tx:`<strong>${k.churn} churn(s)</strong> detectados. Revisar imediatamente!`});
+  if(k.churn>0){
+  const vlTx=k.churnValor?` — Impacto: R$ ${k.churnValor.toLocaleString('pt-BR',{minimumFractionDigits:2})}`:'';
+  al.push({t:'d',i:'🚨',tx:`<strong>${k.churn} churn(s)</strong> detectados${vlTx}. Revisar imediatamente!`});
+}
   if(k.cm!=null&&k.cm<CFG.meta.csatG)al.push({t:'d',i:'📉',tx:`CSAT <strong>${k.cm.toFixed(2)}</strong> abaixo da meta de ${CFG.meta.csatG}.`});
   if(k.mc>CFG.meta.maxC){const e=Object.entries(k.cc).sort((a,b)=>b[1]-a[1])[0];al.push({t:'w',i:'⚖️',tx:`Concentração: <strong>${e[0]}</strong> gerencia ${Math.round(k.mc*100)}% das contas.`})}
   rk.forEach(r=>{if(r.ca!=null&&r.ca<CFG.meta.csatG)al.push({t:'w',i:'⚠️',tx:`CSAT de <strong>${r.name}</strong>: ${r.ca.toFixed(2)} abaixo da meta.`})});
@@ -920,9 +952,10 @@ function calcAlerts(k,rk){
 }
 
 /* ── CHART DATA ──────────────────────────────────────── */
-function bRitmo(rows){
+function bRitmo(rows,reRows){
   const m={};
   rows.forEach(r=>{if(!r.date)return;const k=`${r.date.getFullYear()}-${String(r.date.getMonth()+1).padStart(2,'0')}`;if(!m[k])m[k]={gols:0,churn:0};if(r.isG)m[k].gols++;if(r.isCh)m[k].churn++});
+  if(reRows)reRows.forEach(r=>{if(!r.date||!r.isChurn)return;const k=`${r.date.getFullYear()}-${String(r.date.getMonth()+1).padStart(2,'0')}`;if(!m[k])m[k]={gols:0,churn:0};m[k].churn++});
   const mn=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   const ks=Object.keys(m).sort();
   return{labels:ks.map(k=>{const[y,mo]=k.split('-');return`${mn[+mo-1]}/${y.slice(2)}`}),gols:ks.map(k=>m[k].gols),churn:ks.map(k=>m[k].churn)};
@@ -1035,9 +1068,10 @@ function renderAll(){
   const allCp=[...ST.raw.cp,...ST.raw.cs];
   const exF=ST.raw.ex.filter(x=>inR(x.date,r));
   const cpF=allCp.filter(x=>inR(x.date,r));
-  const k=calcKpis(exF,cpF);const rk=calcRanking(exF,cpF);
+  const reF=(ST.raw.re||[]).filter(x=>inR(x.date,r));
+  const k=calcKpis(exF,cpF,reF);const rk=calcRanking(exF,cpF,reF);
   renderPlacar(k);renderPosse(k);
-  renderCharts(bRitmo(ST.raw.ex),bCsatData(allCp));
+  renderCharts(bRitmo(ST.raw.ex,ST.raw.re),bCsatData(allCp));
   renderPodium(rk);renderRanking(rk);
   const ins=calcIns(k,rk);const al=calcAlerts(k,rk);
   renderIns(ins);renderAlerts(al);renderPerf(rk);
@@ -1048,13 +1082,10 @@ function renderAll(){
 async function init(){
   const ld=document.getElementById('loading');
   try{
-    const[rE,rCp,rCs]=await Promise.all([fetchSheet(CFG.gids.ex),fetchSheet(CFG.gids.cp),fetchSheet(CFG.gids.cs)]);
-    ST.raw.ex=procEx(rE);ST.raw.cp=procCp(rCp);ST.raw.cs=procCp(rCs);
+    const[rE,rCp,rCs,rRe]=await Promise.all([fetchSheet(CFG.gids.ex),fetchSheet(CFG.gids.cp),fetchSheet(CFG.gids.cs),fetchSheet(CFG.gids.re)]);
+    ST.raw.ex=procEx(rE);ST.raw.cp=procCp(rCp);ST.raw.cs=procCp(rCs);ST.raw.re=procRe(rRe);
     renderAll();ld.style.opacity='0';setTimeout(()=>ld.style.display='none',600);
   }catch(e){
-    ld.innerHTML=`<div style="color:#e53935;text-align:center;padding:40px;font-size:1rem;max-width:400px">⚠️ Erro ao carregar dados<br><small style="opacity:.65;display:block;margin:8px 0">${e.message}</small><button onclick="init()" style="margin-top:16px;padding:12px 28px;background:var(--gold);color:#061c0e;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:.95rem;font-family:'Sora',sans-serif">↺ Tentar Novamente</button></div>`;
-  }
-}
 
 /* ── PAGE NAVIGATION ─────────────────────────────────── */
 document.querySelectorAll('.fbtn').forEach(b=>{
@@ -1064,7 +1095,7 @@ document.querySelectorAll('.fbtn').forEach(b=>{
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById(b.dataset.page).classList.add('active');
     ST.page=b.dataset.page;
-    if(ST.page==='p2'){const allCp=[...ST.raw.cp,...ST.raw.cs];renderCharts(bRitmo(ST.raw.ex),bCsatData(allCp))}
+    if(ST.page==='p2'){const allCp=[...ST.raw.cp,...ST.raw.cs];renderCharts(bRitmo(ST.raw.ex,ST.raw.re),bCsatData(allCp))}
   });
 });
 
