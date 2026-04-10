@@ -1111,20 +1111,25 @@ function trigAnim(tp){
 function renderAll(){
   const r=getRange(ST.period);
   const allCp=[...ST.raw.cp,...ST.raw.cs];
-  const exF = ST.raw.ex.filter(x => {  const cpF=allCp.filter(x=>inR(x.date,r));
-    // Conta a conta se foi cadastrada até o fim do período
-    // e considera gol se a jornada foi concluída dentro do período
-  const dentrada = x.dateEntrada || x.date;
-  return dentrada && dentrada <= r.e;
+
+  const exF = ST.raw.ex.filter(x => {
+    const dentrada = x.dateEntrada || x.date;
+    return dentrada && dentrada <= r.e;
   });
-  const reF=(ST.raw.re||[]).filter(x=>inR(x.date,r));
-  const k=calcKpis(exF,cpF,reF);const rk=calcRanking(exF,cpF,reF);
+
+  const cpF = allCp.filter(x => inR(x.date, r));
+  const reF = (ST.raw.re||[]).filter(x => inR(x.date, r));
+
+  const k=calcKpis(exF,cpF,reF);
+  const rk=calcRanking(exF,cpF,reF);
+
   renderPlacar(k);renderPosse(k);
   renderCharts(bRitmo(ST.raw.ex,ST.raw.re),bCsatData(allCp));
   renderPodium(rk);renderRanking(rk);
   const ins=calcIns(k,rk);const al=calcAlerts(k,rk);
   renderIns(ins);renderAlerts(al);renderPerf(rk);
-  const ts=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});sv('tsv','Atualizado: '+ts);sv('fts',ts);
+  const ts=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  sv('tsv','Atualizado: '+ts);sv('fts',ts);
 }
 
 /* ── INIT ────────────────────────────────────────────── */
