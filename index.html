@@ -858,13 +858,32 @@ async function fetchSheet(gid){
 /* ── PROCESSORS ──────────────────────────────────────── */
 function procEx(rows){
   return rows.map(r=>{
-    const dv=r['dataentrada']||r['data_entrada']||r['Data']||'';
-    const d=gvDate(dv);
-    const j=String(r['Jornadas']||r['Jornada']||'').toLowerCase();
-    const st=String(r['Status']||'').toLowerCase();
-    const csm=nIsm(r['CSM Responsavel']||r['CSM Responsável']||r['CSM']||'');
-    return{nome:r['Nome']||'',csm,date:d,isG:j.includes('jornada conclu'),isCh:st.includes('cancelado')||st.includes('solicitou cancelamento')||j.includes('cancelado')};
-  }).filter(r=>r.nome);
+    // Data de entrada (coluna C)
+    const dv = r['dataentrada'] || r['Data de Entrada'] || r['Data'] || '';
+    const d = gvDate(dv);
+
+    // Data de jornada concluída (coluna D)
+    const djv = r['datajornadaconcluída'] || r['dataJornadaConcluída'] ||
+                r['data_jornada_concluida'] || r['Data Jornada Concluída'] ||
+                r['Jornada Concluída'] || r['datajornada'] || '';
+    const dj = gvDate(djv);
+
+    const csm = nIsm(r['CSM Responsavel'] || r['CSM Responsável'] || r['CSM'] || '');
+    const nome = r['Nome'] || '';
+
+    // "Gol" = tem data de jornada concluída preenchida
+    const isG = !!(dj && !isNaN(dj.getTime()));
+
+    // "Churn" = coluna Status ou campo específico (ajuste se sua planilha tiver)
+    const stRaw = String(r['Status'] || r['Situação'] || r['situacao'] || '').toLowerCase();
+    const isCh = stRaw.includes('cancelado') || stRaw.includes('churn') ||
+                 stRaw.includes('solicitou cancelamento');
+
+    // Usar datajornada para filtro temporal se existir, senão dataentrada
+    const dateRef = (isG && dj) ? dj : d;
+
+    return { nome, csm, date: dateRef, dateEntrada: d, dateJornada: dj, isG, isCh };
+  }).filter(r => r.nome && r.csm);
 }
 function procCp(rows){
   return rows.map(r=>{
@@ -890,7 +909,9 @@ function procCp(rows){
 }
 /* ── KPIs ────────────────────────────────────────────── */
 function calcKpis(ex,cp,re){
-  const tot=ex.length,gols=ex.filter(r=>r.isG).length;
+  const exComCsm = ex.filter(r => r.csm && r.csm.length > 0);
+  const tot = exComCsm.length;
+  const gols = exComCsm.filter(r => r.isG).length;
   const churnEx=ex.filter(r=>r.isCh).length;
   const churnRe=re?re.filter(r=>r.isChurn).length:0;
   const churn=churnEx+churnRe;
@@ -952,13 +973,37 @@ function calcAlerts(k,rk){
 }
 
 /* ── CHART DATA ──────────────────────────────────────── */
-function bRitmo(rows,reRows){
-  const m={};
-  rows.forEach(r=>{if(!r.date)return;const k=`${r.date.getFullYear()}-${String(r.date.getMonth()+1).padStart(2,'0')}`;if(!m[k])m[k]={gols:0,churn:0};if(r.isG)m[k].gols++;if(r.isCh)m[k].churn++});
-  if(reRows)reRows.forEach(r=>{if(!r.date||!r.isChurn)return;const k=`${r.date.getFullYear()}-${String(r.date.getMonth()+1).padStart(2,'0')}`;if(!m[k])m[k]={gols:0,churn:0};m[k].churn++});
-  const mn=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-  const ks=Object.keys(m).sort();
-  return{labels:ks.map(k=>{const[y,mo]=k.split('-');return`${mn[+mo-1]}/${y.slice(2)}`}),gols:ks.map(k=>m[k].gols),churn:ks.map(k=>m[k].churn)};
+function bRitmo(rows, reRows){
+  const m = {};
+  rows.forEach(r => {
+    // Usa dateJornada para gols, dateEntrada para total
+    const dGol = r.dateJornada || r.date;
+    const dEnt = r.dateEntrada || r.date;
+    if(!dEnt) return;
+
+    const kE = `${dEnt.getFullYear()}-${String(dEnt.getMonth()+1).padStart(2,'0')}`;
+    if(!m[kE]) m[kE] = {gols:0, churn:0};
+
+    if(r.isG && dGol){
+      const kG = `${dGol.getFullYear()}-${String(dGol.getMonth()+1).padStart(2,'0')}`;
+      if(!m[kG]) m[kG] = {gols:0, churn:0};
+      m[kG].gols++;
+    }
+    if(r.isCh) m[kE].churn++;
+  });
+  if(reRows) reRows.forEach(r => {
+    if(!r.date || !r.isChurn) return;
+    const k = `${r.date.getFullYear()}-${String(r.date.getMonth()+1).padStart(2,'0')}`;
+    if(!m[k]) m[k] = {gols:0, churn:0};
+    m[k].churn++;
+  });
+  const mn = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const ks = Object.keys(m).sort();
+  return {
+    labels: ks.map(k => { const[y,mo]=k.split('-'); return `${mn[+mo-1]}/${y.slice(2)}`; }),
+    gols:   ks.map(k => m[k].gols),
+    churn:  ks.map(k => m[k].churn)
+  };
 }
 function bCsatData(rows){
   const m={};
@@ -1066,8 +1111,12 @@ function trigAnim(tp){
 function renderAll(){
   const r=getRange(ST.period);
   const allCp=[...ST.raw.cp,...ST.raw.cs];
-  const exF=ST.raw.ex.filter(x=>inR(x.date,r));
-  const cpF=allCp.filter(x=>inR(x.date,r));
+  const exF = ST.raw.ex.filter(x => {  const cpF=allCp.filter(x=>inR(x.date,r));
+    // Conta a conta se foi cadastrada até o fim do período
+    // e considera gol se a jornada foi concluída dentro do período
+  const dentrada = x.dateEntrada || x.date;
+  return dentrada && dentrada <= r.e;
+  });
   const reF=(ST.raw.re||[]).filter(x=>inR(x.date,r));
   const k=calcKpis(exF,cpF,reF);const rk=calcRanking(exF,cpF,reF);
   renderPlacar(k);renderPosse(k);
