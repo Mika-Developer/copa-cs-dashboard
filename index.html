@@ -19,7 +19,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
- 
+
 body{
   background:var(--gd);
   font-family:'Sora',system-ui,Arial,sans-serif;
@@ -27,7 +27,7 @@ body{
 }
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.55;}
 .page-wrap{position:relative;z-index:1}
- 
+
 /* ── LOADING ─────────────────────────────────────────── */
 #loading{
   position:fixed;inset:0;
@@ -39,7 +39,7 @@ body{
 @keyframes ballBounce{from{transform:translateY(0) rotate(0deg);box-shadow:0 0 30px rgba(245,200,66,.5)}to{transform:translateY(-24px) rotate(180deg);box-shadow:0 20px 40px rgba(0,0,0,.5)}}
 .load-text{color:var(--gold);font-weight:800;font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;animation:pulse 1.4s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
- 
+
 /* ── ANIM OVERLAY ────────────────────────────────────── */
 .aovl{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .3s;backdrop-filter:blur(2px);}
 .aovl.show{opacity:1}
@@ -48,7 +48,7 @@ body{
 .aemj{font-size:5.5rem;display:block;animation:bnc .35s infinite alternate}
 @keyframes bnc{to{transform:scale(1.18) rotate(5deg)}}
 .atxtd{font-size:1.4rem;font-weight:800;color:var(--gold);margin-top:12px;letter-spacing:1px}
- 
+
 /* ── HEADER ──────────────────────────────────────────── */
 header{background:linear-gradient(90deg,var(--gd) 0%,var(--gf) 50%,rgba(26,107,53,.8) 100%);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid rgba(245,200,66,.4);box-shadow:0 4px 40px rgba(0,0,0,.5);position:relative;overflow:hidden;}
 header::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(245,200,66,.06),transparent);animation:headerShine 4s ease-in-out infinite;}
@@ -62,7 +62,7 @@ header::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100
 .h-badge{background:rgba(46,204,113,.15);border:1px solid var(--border2);border-radius:20px;padding:4px 12px;font-size:.72rem;font-weight:600;color:var(--gl);display:flex;align-items:center;gap:6px;}
 .live-dot{width:7px;height:7px;background:var(--gl);border-radius:50%;animation:livePulse 1.2s ease-in-out infinite;box-shadow:0 0 6px var(--gl);}
 @keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
- 
+
 /* ── SLIDE PROGRESS BAR ──────────────────────────────── */
 /* 1. ALTERAÇÃO — barra de progresso do auto-slide */
 #slide-progress-wrap{
@@ -74,7 +74,7 @@ header::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100
   background:linear-gradient(90deg,var(--gm),var(--gold));
   transition:width .25s linear;
 }
- 
+
 /* ── NAV BAR ─────────────────────────────────────────── */
 .fbar{background:rgba(6,28,14,.8);backdrop-filter:blur(10px);padding:14px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--border);position:sticky;top:3px;z-index:100;}
 .fbtn{padding:9px 22px;border:1.5px solid rgba(46,204,113,.3);background:transparent;color:var(--tm);border-radius:40px;cursor:pointer;font-size:.88rem;font-weight:600;font-family:'Sora',sans-serif;transition:all .25s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;}
@@ -82,7 +82,7 @@ header::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100
 .fbtn span{position:relative;z-index:1}
 .fbtn.active,.fbtn:hover{color:var(--gd);border-color:var(--gold);transform:scale(1.05);box-shadow:0 4px 20px rgba(245,200,66,.35);}
 .fbtn.active::before,.fbtn:hover::before{opacity:1}
- 
+
 /* 1. ALTERAÇÃO — botão pause/play */
 #auto-toggle{
   padding:7px 16px;
@@ -93,30 +93,30 @@ header::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100
   display:flex;align-items:center;gap:6px;
 }
 #auto-toggle:hover{background:rgba(245,200,66,.18)}
- 
+
 #psel{padding:9px 16px;background:var(--glass);color:var(--tl);border:1.5px solid var(--border2);border-radius:10px;font-size:.88rem;cursor:pointer;font-family:'Sora',sans-serif;backdrop-filter:blur(10px);transition:border-color .2s;margin-left:auto;}
 #psel:hover{border-color:var(--gold)}
 #psel option{background:var(--gf);color:var(--tl)}
- 
+
 /* ── PAGES ───────────────────────────────────────────── */
 .page{display:none}
 .page.active{display:block}
- 
+
 /* ── MAIN ────────────────────────────────────────────── */
 main{padding:22px 40px;max-width:1700px;margin:0 auto}
 .sgap{margin-bottom:28px}
- 
+
 /* ── SECTION TITLE ───────────────────────────────────── */
 .stitle{font-size:1rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
 .stitle::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(245,200,66,.4),transparent);}
- 
+
 /* ── GRIDS ───────────────────────────────────────────── */
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .g2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 /* 5. ALTERAÇÃO — grid visão 1 com ranking enablement */
 .g-v1-top{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
- 
+
 /* ── GLASS CARD ──────────────────────────────────────── */
 .card{background:var(--glass);backdrop-filter:blur(16px);border-radius:var(--rd2);padding:22px 20px;border:1px solid var(--border);box-shadow:var(--sh);transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;position:relative;overflow:hidden;cursor:default;}
 .card::before{content:'';position:absolute;inset:0;border-radius:var(--rd2);background:linear-gradient(135deg,rgba(255,255,255,.05) 0%,transparent 60%);pointer-events:none;}
@@ -142,7 +142,7 @@ main{padding:22px 40px;max-width:1700px;margin:0 auto}
 .delta.up{color:#6fffa0}
 .delta.down{color:var(--red2)}
 .delta.neutral{color:var(--gold)}
- 
+
 /* ── KPI MINI CARD ───────────────────────────────────── */
 .kc{background:var(--glass);backdrop-filter:blur(12px);border-radius:var(--rd);padding:14px;border:1px solid var(--border);transition:transform .2s,border-color .2s;}
 .kc:hover{transform:translateY(-3px);border-color:var(--border2)}
@@ -151,11 +151,11 @@ main{padding:22px 40px;max-width:1700px;margin:0 auto}
 .k-hint{font-size:.68rem;color:var(--tm)}
 .pbar{height:4px;background:rgba(255,255,255,.1);border-radius:3px;margin-top:8px;overflow:hidden}
 .pfill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gm),var(--gl));transition:width 1s cubic-bezier(.4,0,.2,1)}
- 
+
 /* ── CHART WRAP ──────────────────────────────────────── */
 .cw{background:var(--glass);backdrop-filter:blur(16px);border-radius:var(--rd2);padding:24px;border:1px solid var(--border);box-shadow:var(--sh);min-height:300px;position:relative;}
 canvas{width:100%!important}
- 
+
 /* ── PÓDIO ───────────────────────────────────────────── */
 .podium-wrap{display:flex;align-items:flex-end;justify-content:center;gap:16px;margin-bottom:32px;padding:24px 0 0;}
 .podium-slot{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;max-width:220px;}
@@ -171,7 +171,7 @@ canvas{width:100%!important}
 .podium-slot:nth-child(1) .podium-block{min-height:80px;background:linear-gradient(180deg,rgba(192,192,192,.25),rgba(192,192,192,.08));border:1px solid rgba(192,192,192,.25);}
 .podium-slot:nth-child(2) .podium-block{min-height:120px;background:linear-gradient(180deg,rgba(245,200,66,.25),rgba(245,200,66,.08));border:1px solid rgba(245,200,66,.3);}
 .podium-slot:nth-child(3) .podium-block{min-height:60px;background:linear-gradient(180deg,rgba(205,127,50,.25),rgba(205,127,50,.08));border:1px solid rgba(205,127,50,.25);}
- 
+
 /* ── RANKING TABLE ───────────────────────────────────── */
 .rtable{width:100%;border-collapse:collapse}
 .rtable th{text-align:left;padding:10px 14px;background:rgba(0,0,0,.3);color:var(--gold);font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--border2);}
@@ -183,21 +183,21 @@ canvas{width:100%!important}
 .rpos.s{color:#c0c0c0;text-shadow:0 0 12px #c0c0c0}
 .rpos.b{color:#cd7f32;text-shadow:0 0 12px #cd7f32}
 .score-bar{height:5px;border-radius:3px;margin-top:3px;background:linear-gradient(90deg,var(--gold),var(--gl));transition:width .8s ease;}
- 
+
 /* ── BADGES ──────────────────────────────────────────── */
 .badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;gap:4px}
 .bg{background:rgba(46,204,113,.2);color:var(--gl);border:1px solid rgba(46,204,113,.3)}
 .bgo{background:rgba(245,200,66,.2);color:var(--gold);border:1px solid rgba(245,200,66,.3)}
 .br{background:rgba(229,57,53,.2);color:var(--red2);border:1px solid rgba(229,57,53,.3)}
 .bb{background:rgba(66,165,245,.2);color:#90caf9;border:1px solid rgba(66,165,245,.3)}
- 
+
 /* ── INSIGHTS ────────────────────────────────────────── */
 .igrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
 .icard{background:var(--glass);backdrop-filter:blur(10px);border-radius:var(--rd);padding:14px 16px;border:1px solid var(--border);border-left:4px solid var(--gl);font-size:.85rem;line-height:1.6;transition:transform .2s,border-left-color .2s;}
 .icard:hover{transform:translateX(4px)}
 .icard.warn{border-left-color:var(--gold)}
 .icard.alert{border-left-color:var(--red2);background:rgba(229,57,53,.06)}
- 
+
 /* ── ALERTS ──────────────────────────────────────────── */
 .alist{display:flex;flex-direction:column;gap:10px}
 .aitem{display:flex;align-items:center;gap:14px;background:rgba(229,57,53,.08);border:1px solid rgba(229,57,53,.25);border-radius:14px;padding:12px 16px;animation:alertPulse 3s ease-in-out infinite;}
@@ -207,7 +207,7 @@ canvas{width:100%!important}
 .aitem.ok{background:rgba(46,204,113,.07);border-color:rgba(46,204,113,.25);animation:none}
 .aico{font-size:1.6rem}
 .atxt{font-size:.85rem;line-height:1.4}
- 
+
 /* 5. ALTERAÇÃO — tabela enablement compacta */
 .enb-table{width:100%;border-collapse:collapse;font-size:.75rem;}
 .enb-table th{padding:7px 10px;background:rgba(0,0,0,.35);color:var(--gold);font-size:.62rem;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border2);white-space:nowrap;}
@@ -218,21 +218,21 @@ canvas{width:100%!important}
 .enb-kpi-ok{color:#6fffa0;}
 .enb-kpi-warn{color:var(--gold);}
 .enb-kpi-bad{color:var(--red2);}
- 
+
 /* ── FOOTER ──────────────────────────────────────────── */
 footer{text-align:center;padding:16px;font-size:.74rem;color:var(--tm);opacity:.6;border-top:1px solid var(--border);margin-top:32px;}
- 
+
 /* ── SCROLLBAR ───────────────────────────────────────── */
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:var(--gd)}
 ::-webkit-scrollbar-thumb{background:var(--gm);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--gl)}
- 
+
 /* ── RESPONSIVE ──────────────────────────────────────── */
 @media(max-width:1100px){.g3{grid-template-columns:repeat(2,1fr)}.g4{grid-template-columns:repeat(2,1fr)}.g-v1-top{grid-template-columns:1fr}}
 @media(max-width:700px){.g3,.g4,.g2,.g-v1-top{grid-template-columns:1fr}main{padding:12px}
 .fbar{padding:10px 14px}header{padding:12px 16px}.c-val{font-size:2rem}.podium-wrap{gap:8px}}
- 
+
 /* ── AVATARES ────────────────────────────────────────── */
 .av-wrap{position:relative;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .av-initials{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-weight:900;font-family:'Sora',sans-serif;}
@@ -241,23 +241,23 @@ footer{text-align:center;padding:16px;font-size:.74rem;color:var(--tm);opacity:.
 </style>
 </head>
 <body>
- 
+
 <canvas id="bg-canvas"></canvas>
- 
+
 <div class="page-wrap">
- 
+
 <div id="loading">
   <div class="load-ball"></div>
   <div class="load-text">Carregando Copa CS 2026…</div>
 </div>
- 
+
 <div class="aovl" id="aovl">
   <div class="abox">
     <span class="aemj" id="aemj"></span>
     <div class="atxtd" id="atxtd"></div>
   </div>
 </div>
- 
+
 <!-- HEADER -->
 <header>
   <div class="h-left">
@@ -273,10 +273,10 @@ footer{text-align:center;padding:16px;font-size:.74rem;color:var(--tm);opacity:.
     <div id="tsv" style="font-size:.75rem;margin-top:2px">Carregando…</div>
   </div>
 </header>
- 
+
 <!-- 1. ALTERAÇÃO — barra de progresso slide -->
 <div id="slide-progress-wrap"><div id="slide-progress-bar"></div></div>
- 
+
 <!-- NAV BAR -->
 <div class="fbar">
   <button class="fbtn active" data-page="p1"><span>⚽ Placar</span></button>
@@ -298,7 +298,7 @@ footer{text-align:center;padding:16px;font-size:.74rem;color:var(--tm);opacity:.
     </optgroup>
   </select>
 </div>
- 
+
 <!-- ═══════════════════════════════════════════════════
      PÁGINA 1 — PLACAR + POSSE + SUPORTE + ENABLEMENT
 ════════════════════════════════════════════════════ -->
@@ -354,12 +354,12 @@ footer{text-align:center;padding:16px;font-size:.74rem;color:var(--tm);opacity:.
         </div>
       </div>
     </section>
- 
+
     <section class="sgap">
       <div class="stitle">🏃 Posse de Bola — KPIs Operacionais</div>
       <div class="g4" id="posse-grid"></div>
     </section>
- 
+
     <!-- 5. ALTERAÇÃO — Ranking Enablement na visão 1 -->
     <section class="sgap">
       <div class="stitle">🎓 Ranking Enablement</div>
@@ -387,7 +387,7 @@ footer{text-align:center;padding:16px;font-size:.74rem;color:var(--tm);opacity:.
     </section>
   </main>
 </div>
- 
+
 <!-- ═══════════════════════════════════════════════════
      PÁGINA 2 — RITMO DE JOGO
 ════════════════════════════════════════════════════ -->
@@ -402,7 +402,7 @@ footer{text-align:center;padding:16px;font-size:.74rem;color:var(--tm);opacity:.
     </section>
   </main>
 </div>
- 
+
 <!-- ═══════════════════════════════════════════════════
      PÁGINA 3 — ARTILHARIA / RANKING
 ════════════════════════════════════════════════════ -->
@@ -423,7 +423,7 @@ footer{text-align:center;padding:16px;font-size:.74rem;color:var(--tm);opacity:.
     </section>
   </main>
 </div>
- 
+
 <!-- ═══════════════════════════════════════════════════
      PÁGINA 4 — ANÁLISE & VAR (unificada)
      2. ALTERAÇÃO: fusão de "Análise do Técnico" + "Alertas VAR"
@@ -454,16 +454,16 @@ footer{text-align:center;padding:16px;font-size:.74rem;color:var(--tm);opacity:.
     </section>
   </main>
 </div>
- 
+
 <footer>Copa CS Suri 2026 · By Mika | Team Sales Ops · <span id="fts"></span></footer>
- 
+
 </div><!-- /page-wrap -->
- 
+
 <script>
 /* ══════════════════════════════════════════════════════
    COPA CS 2026 — Dashboard Engine
    ══════════════════════════════════════════════════════ */
- 
+
 /* ── BACKGROUND ANIMATION ────────────────────────────── */
 (function initBG(){
   const cvs=document.getElementById('bg-canvas');
@@ -478,7 +478,7 @@ footer{text-align:center;padding:16px;font-size:.74rem;color:var(--tm);opacity:.
   function tick(){ctx.clearRect(0,0,W,H);drawField();drawConns();particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.pulse+=p.pulseSpeed;const a=p.alpha*(0.7+0.3*Math.sin(p.pulse));if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.save();ctx.globalAlpha=a;ctx.fillStyle=p.color;ctx.shadowColor=p.color;ctx.shadowBlur=8;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.restore()});requestAnimationFrame(tick)}
   tick();
 })();
- 
+
 /* ── CONFIG ──────────────────────────────────────────── */
 const CFG={
   id:'1OZ6fVR8IZ9FStDWJKIUmoD2afTVrBSELHgL7-tcbFAc',
@@ -523,7 +523,7 @@ const CFG={
     'Amanda Negreiros':'Amanda Negreiros'
   }
 };
- 
+
 /* ── FOTOS DOS CSMs ──────────────────────────────────── */
 const FOTOS={
   'Gabriel Sales':      'https://lh3.googleusercontent.com/d/1oWKokmUeu8Ga0eN2d4FgdfdlZ-cTFX0X',
@@ -539,15 +539,15 @@ const FOTOS={
   'Luana Laise':        'https://lh3.googleusercontent.com/d/1ARn7JddY4eDU3TUmur2xg_JfDffCkzK4',
   'Wallison':           'https://lh3.googleusercontent.com/d/1Evmn49q-HpOLo7yR_at5_6_hnb_Re8Pa'
 };
- 
+
 function getAvatar(name){
   const foto=FOTOS[name];
   if(foto)return`<img src="${foto}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"><span class="av-initials" style="display:none">${initials(name)}</span>`;
   return`<span class="av-initials">${initials(name)}</span>`;
 }
- 
+
 const ST={page:'p1',period:'month',raw:{ex:[],cp:[],cs:[],su:[],re:[],enb:[]},prev:{g:null,c:null,h:null,s:null}};
- 
+
 /* ── UTILS ───────────────────────────────────────────── */
 function gvDate(v){
   if(v==null||v==='')return null;
@@ -578,21 +578,21 @@ function avg(a){return a.length?a.reduce((x,y)=>x+y,0)/a.length:null}
 function pct(v,t){return t?Math.round(v/t*100):0}
 function fs(n){return n==null?'—':(+n).toFixed(1)}
 function initials(name){return name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)}
- 
+
 /* ── ANIMATED COUNTER ────────────────────────────────── */
 function animCount(el,target,isFloat=false,duration=900){
   const start=performance.now();const from=parseFloat(el.textContent)||0;
   function step(now){const p=Math.min((now-start)/duration,1);const ease=1-Math.pow(1-p,3);const val=from+(target-from)*ease;el.textContent=isFloat?val.toFixed(2):Math.round(val);if(p<1)requestAnimationFrame(step)}
   requestAnimationFrame(step);
 }
- 
+
 /* ── FETCH via Apps Script ───────────────────────────── */
 const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwXFe7ojIlEMnMfB4M2rJLWBZfnSrrA6MJLDsrNXEKc58QQ9cviV8C7V1FRL1hcicQz5A/exec';
 async function fetchSheet(gid){
   try{const res=await fetch(`${SCRIPT_URL}?gid=${gid}`);const json=await res.json();return json.rows||[]}
   catch(e){console.warn('fetchSheet error gid='+gid,e);return[]}
 }
- 
+
 /* ── PROCESSORS ──────────────────────────────────────── */
 function procEx(rows){
   return rows.map(r=>{
@@ -609,7 +609,7 @@ function procEx(rows){
     return{nome,csm,date:dateRef,dateEntrada:d,dateJornada:dj,isG,isCh};
   }).filter(r=>r.nome&&r.csm);
 }
- 
+
 function procCp(rows){
   return rows.map(r=>{
     const dv=r['Data da Resposta']||r['Data']||'';
@@ -619,7 +619,7 @@ function procCp(rows){
     return{csm,date:gvDate(dv),nota:isNaN(nota)?null:nota};
   }).filter(r=>r.nota!=null);
 }
- 
+
 /* 3. ALTERAÇÃO — processor CSAT Suporte
    Colunas reais: Atendente | Atendimentos | TME | TMA | TMR | Media da nota | Quantidade de notas | Mês
    O KPI do card é a média ponderada de "Media da nota" × "Quantidade de notas" de todos os atendentes.
@@ -635,7 +635,7 @@ function procSu(rows){
     return { date: gvDate(dv), nota: isNaN(nota) ? null : nota, qtd, atend };
   }).filter(r => r.nota != null && r.qtd > 0);
 }
- 
+
 function procRe(rows){
   return rows.map(r=>{
     const dv=r['Criado em']||r['Data']||'';const d=gvDate(dv);
@@ -648,7 +648,7 @@ function procRe(rows){
     return{nome,csm,date:d,isChurn:fase==='churn',isAguardando:fase==='aguardando',tipo,valor};
   }).filter(r=>r.nome);
 }
- 
+
 /* 5. ALTERAÇÃO — processor Enablement
    Colunas reais (gid=1132403899):
    Data | Responsável | Taxa de abertura e-mail | Taxa de satisfação de conteúdos |
@@ -664,7 +664,7 @@ function procEnb(rows){
     const n = parseFloat(s.replace('%','').replace(',','.'));
     return isNaN(n) ? null : n;
   }
- 
+
   // Agrupa por Responsável — pega a última entrada de cada KPI (ou média se múltiplas)
   const map = {};
   rows.forEach(r => {
@@ -683,7 +683,7 @@ function procEnb(rows){
     const re = parseVal(r['Reuniões realizadas']);              if(re!=null) d.reunioes.push(re);
     const sa = parseVal(r['Satisfação da adoção']);            if(sa!=null) d.satisfAdocao.push(sa);
   });
- 
+
   return Object.entries(map).map(([name, d]) => ({
     name,
     abertura:       avg(d.abertura),       // %
@@ -695,7 +695,7 @@ function procEnb(rows){
     satisfAdocao:   avg(d.satisfAdocao)    // %
   }));
 }
- 
+
 /* ── KPIs ────────────────────────────────────────────── */
 function calcKpis(ex,cp,re,su){
   const exComCsm=ex.filter(r=>r.csm&&r.csm.length>0);
@@ -718,7 +718,7 @@ function calcKpis(ex,cp,re,su){
   const cmSu = suPeso > 0 ? suSoma / suPeso : null;
   return{tot,gols,churn,churnRe,churnEx,saude,cm,pC,pS,pCm,mc,cc,ns,churnValor,cmSu};
 }
- 
+
 /* ── RANKING — 4. ALTERAÇÃO: CSAT calculado corretamente ──
    Antes: usava `cp` já filtrado por período, mas sem garantia
    de que as notas são do CSM correto. Agora usa o campo
@@ -756,7 +756,7 @@ function calcRanking(ex,cp,re){
     return{name,sc,gols:c.gols,tot:c.tot,churn:c.churn,ca,saude:sN};
   }).sort((a,b)=>b.sc-a.sc);
 }
- 
+
 /* ── INSIGHTS ────────────────────────────────────────── */
 function calcIns(k,rk){
   const ins=[];
@@ -771,7 +771,7 @@ function calcIns(k,rk){
   if(!ins.length)ins.push({t:'info',tx:'📋 Nenhum evento relevante no período. Continue monitorando!'});
   return ins;
 }
- 
+
 /* ── ALERTS ──────────────────────────────────────────── */
 function calcAlerts(k,rk){
   const al=[];
@@ -784,7 +784,7 @@ function calcAlerts(k,rk){
   if(!al.length)al.push({t:'ok',i:'✅',tx:'Nenhum alerta crítico. Operação dentro dos parâmetros!'});
   return al;
 }
- 
+
 /* ── CHART DATA ──────────────────────────────────────── */
 function bRitmo(rows,reRows){
   const m={};
@@ -807,7 +807,7 @@ function bCsatData(rows){
   const ks=Object.keys(m).sort();
   return{labels:ks.map(k=>{const[y,mo]=k.split('-');return`${mn[+mo-1]}/${y.slice(2)}`}),vals:ks.map(k=>+(avg(m[k]).toFixed(2)))};
 }
- 
+
 /* ── CHARTS ──────────────────────────────────────────── */
 let cR=null,cC=null;
 function renderCharts(ri,cd){
@@ -831,7 +831,7 @@ function renderCharts(ri,cd){
     options:{...base,plugins:{...base.plugins,title:{display:true,text:'Evolução CSAT',color:'#f5c842',font:{size:13,weight:'bold',family:'Sora'}}}}
   });
 }
- 
+
 /* ── RENDER FUNCTIONS ────────────────────────────────── */
 function sv(id,v){const e=document.getElementById(id);if(e)e.textContent=v}
 function setDelta(id,cur,prv,inv){
@@ -841,7 +841,7 @@ function setDelta(id,cur,prv,inv){
   const up=d>0,good=inv?!up:up;e.className=`delta ${good?'up':'down'}`;
   e.innerHTML=`<span>${up?'▲':'▼'}</span> ${Math.abs(d).toFixed(d%1?1:0)} vs período anterior`;
 }
- 
+
 function renderPlacar(k){
   const gEl=document.getElementById('vgols');const cEl=document.getElementById('vcsat');
   const hEl=document.getElementById('vchurn');const sEl=document.getElementById('vsuporte');
@@ -859,7 +859,7 @@ function renderPlacar(k){
   if(k.cmSu!=null)animCount(sEl,k.cmSu,true);else sEl.textContent='—';
   ST.prev.g=k.gols;ST.prev.c=k.cm;ST.prev.h=k.churn;ST.prev.s=k.cmSu;
 }
- 
+
 function renderPosse(k){
   document.getElementById('posse-grid').innerHTML=[
     {l:'% Jornadas Concluídas',v:k.pC+'%',h:`${k.gols}/${k.tot} contas`,p:k.pC},
@@ -868,7 +868,7 @@ function renderPosse(k){
     {l:'Total de Contas',v:k.tot,h:'No período filtrado',p:Math.min(k.tot,100)}
   ].map(x=>`<div class="kc"><div class="k-lbl">${x.l}</div><div class="k-val">${x.v}</div><div class="k-hint">${x.h}</div><div class="pbar"><div class="pfill" style="width:${x.p}%"></div></div></div>`).join('');
 }
- 
+
 function renderPodium(rk){
   const wrap=document.getElementById('podium-wrap');
   if(!rk.length){wrap.innerHTML='<p style="opacity:.5;text-align:center;padding:40px">Sem dados para exibir</p>';return}
@@ -876,25 +876,25 @@ function renderPodium(rk){
   const medals=['🥈','🥇','🥉'],heights=['80px','120px','60px'],nums=['2','1','3'];
   wrap.innerHTML=order.map((r,i)=>{if(!r)return'';return`<div class="podium-slot"><div class="podium-medal">${medals[i]}</div><div class="podium-avatar">${getAvatar(r.name)}</div><div class="podium-name">${r.name}</div><div class="podium-score">Score ${fs(r.sc)} · ${r.gols} gols</div><div class="podium-block" style="min-height:${heights[i]}">${nums[i]}</div></div>`}).join('');
 }
- 
+
 function renderRanking(rk){
   const maxSc=rk.length?rk[0].sc:100;const medals=['g','s','b'];
   document.getElementById('rank-body').innerHTML=rk.map((r,i)=>`<tr><td><span class="rpos ${medals[i]||''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1)}</span></td><td><div class="rank-name-wrap"><div class="rank-avatar">${getAvatar(r.name)}</div><div><strong>${r.name}</strong><div class="score-bar" style="width:${Math.round(r.sc/maxSc*100)}%"></div></div></div></td><td><span class="badge bgo">⚡ ${fs(r.sc)}</span></td><td>${r.gols} ⚽</td><td>${r.ca!=null?r.ca.toFixed(2):'—'}</td><td><span class="badge ${r.saude>=.9?'bg':r.saude>=.7?'bgo':'br'}">${Math.round(r.saude*100)}%</span></td></tr>`).join('')||'<tr><td colspan="6" style="text-align:center;opacity:.5;padding:24px">Sem dados suficientes</td></tr>';
 }
- 
+
 function renderIns(ins){
   document.getElementById('ins-grid').innerHTML=ins.map(i=>`<div class="icard ${i.t==='alert'?'alert':i.t==='warn'?'warn':''}">${i.tx}</div>`).join('');
 }
- 
+
 function renderAlerts(al){
   document.getElementById('alert-list').innerHTML=al.map(a=>`<div class="aitem ${a.t==='w'?'warn':a.t==='ok'?'ok':''}"><span class="aico">${a.i}</span><span class="atxt">${a.tx}</span></div>`).join('');
 }
- 
+
 function renderPerf(rk){
   document.getElementById('perf-head').innerHTML='<tr><th>CSM</th><th>Total</th><th>Jornadas ✅</th><th>Churn 🟥</th><th>CSAT Médio</th><th>Score</th></tr>';
   document.getElementById('perf-body').innerHTML=rk.map(r=>`<tr><td><strong>${r.name}</strong></td><td>${r.tot}</td><td>${r.gols}</td><td><span class="badge ${r.churn>0?'br':'bg'}">${r.churn}</span></td><td>${r.ca!=null?r.ca.toFixed(2):'—'}</td><td><strong>${fs(r.sc)}</strong></td></tr>`).join('')||'<tr><td colspan="6" style="text-align:center;opacity:.5;padding:24px">Sem dados no período</td></tr>';
 }
- 
+
 /* 5. ALTERAÇÃO — renderizar tabela enablement
    Escalas reais:
    - abertura, satisfConteudo, cobertura, satisfAdocao → % (0-100), meta ≥ 60%
@@ -916,7 +916,7 @@ function fmtKpi(v, tipo){
   }
   return `<span class="enb-kpi-val ${cls}">${disp}</span>`;
 }
- 
+
 function renderEnablement(enb){
   if(!enb||!enb.length){
     document.getElementById('enb-body').innerHTML='<tr><td colspan="10" style="text-align:center;padding:16px;opacity:.5">Sem dados de enablement no período</td></tr>';
@@ -935,7 +935,7 @@ function renderEnablement(enb){
     const sc = vals.length ? avg(vals) : 0;
     return{...r,sc};
   }).sort((a,b)=>b.sc-a.sc);
- 
+
   const medals=['🥇','🥈','🥉'];
   document.getElementById('enb-body').innerHTML=scored.map((r,i)=>`
     <tr>
@@ -951,14 +951,14 @@ function renderEnablement(enb){
       <td><span class="badge bgo">⚡ ${r.sc.toFixed(0)}</span></td>
     </tr>`).join('');
 }
- 
+
 /* ── SOUNDS ──────────────────────────────────────────── */
 let Ax=null;
 function gAx(){if(!Ax)Ax=new(window.AudioContext||window.webkitAudioContext)();return Ax}
 function sndGol(){try{const a=gAx();[0,.08,.16,.25,.35,.46].forEach((t,i)=>{const o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.value=350+i*130;g.gain.setValueAtTime(.3,a.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+t+.2);o.start(a.currentTime+t);o.stop(a.currentTime+t+.22)})}catch(e){}}
 function sndChurn(){try{const a=gAx();const o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sawtooth';o.frequency.setValueAtTime(140,a.currentTime);o.frequency.exponentialRampToValueAtTime(50,a.currentTime+1.1);g.gain.setValueAtTime(.5,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+1.1);o.start(a.currentTime);o.stop(a.currentTime+1.1)}catch(e){}}
 function sndCsat(){try{const a=gAx();[0,.32].forEach(t=>{const o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type='sine';o.frequency.value=1400;g.gain.setValueAtTime(.38,a.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+t+.25);o.start(a.currentTime+t);o.stop(a.currentTime+t+.27)})}catch(e){}}
- 
+
 /* ── ANIMATION TRIGGER ───────────────────────────────── */
 let aTO=null;
 function trigAnim(tp){
@@ -968,7 +968,7 @@ function trigAnim(tp){
   else{em.textContent='📣🎯';tx.textContent='Assistência! CSAT Atualizado';bx.style.borderColor='#2ecc71';bx.style.boxShadow='0 0 80px rgba(46,204,113,.5),0 0 160px rgba(46,204,113,.2)';sndCsat()}
   ov.classList.add('show');if(aTO)clearTimeout(aTO);aTO=setTimeout(()=>ov.classList.remove('show'),3500);
 }
- 
+
 /* ── MAIN RENDER ─────────────────────────────────────── */
 function renderAll(){
   const r=getRange(ST.period);
@@ -990,7 +990,7 @@ function renderAll(){
   const ts=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
   sv('tsv','Atualizado: '+ts);sv('fts',ts);
 }
- 
+
 /* ═══════════════════════════════════════════════════════
    1. ALTERAÇÃO — AUTO-SLIDE (25 segundos por tela)
    ═══════════════════════════════════════════════════════ */
@@ -1001,7 +1001,7 @@ let slideInterval=null;
 let slideStart=null;
 let rafId=null;
 let autoSlideEnabled=true;
- 
+
 function goToPage(pageId){
   document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -1011,7 +1011,7 @@ function goToPage(pageId){
   ST.page=pageId;
   if(pageId==='p2'){const allCp=[...ST.raw.cp,...ST.raw.cs];renderCharts(bRitmo(ST.raw.ex,ST.raw.re),bCsatData(allCp));}
 }
- 
+
 function updateProgressBar(){
   if(!autoSlideEnabled||!slideStart){document.getElementById('slide-progress-bar').style.width='0%';return;}
   const elapsed=Date.now()-slideStart;
@@ -1019,7 +1019,7 @@ function updateProgressBar(){
   document.getElementById('slide-progress-bar').style.width=pct+'%';
   if(pct<100)rafId=requestAnimationFrame(updateProgressBar);
 }
- 
+
 function nextSlide(){
   slideIdx=(slideIdx+1)%PAGES.length;
   goToPage(PAGES[slideIdx]);
@@ -1027,7 +1027,7 @@ function nextSlide(){
   if(rafId)cancelAnimationFrame(rafId);
   updateProgressBar();
 }
- 
+
 function startAutoSlide(){
   if(slideInterval)clearInterval(slideInterval);
   slideStart=Date.now();
@@ -1035,21 +1035,21 @@ function startAutoSlide(){
   if(rafId)cancelAnimationFrame(rafId);
   updateProgressBar();
 }
- 
+
 function stopAutoSlide(){
   if(slideInterval)clearInterval(slideInterval);
   slideInterval=null;slideStart=null;
   if(rafId)cancelAnimationFrame(rafId);
   document.getElementById('slide-progress-bar').style.width='0%';
 }
- 
+
 document.getElementById('auto-toggle').addEventListener('click',()=>{
   autoSlideEnabled=!autoSlideEnabled;
   const btn=document.getElementById('auto-toggle');
   if(autoSlideEnabled){btn.textContent='⏸ Auto';startAutoSlide();}
   else{btn.textContent='▶ Auto';stopAutoSlide();}
 });
- 
+
 /* ── PAGE NAVIGATION (mantém original + reseta slide timer) ── */
 document.querySelectorAll('.fbtn[data-page]').forEach(b=>{
   b.addEventListener('click',()=>{
@@ -1062,10 +1062,10 @@ document.querySelectorAll('.fbtn[data-page]').forEach(b=>{
     if(autoSlideEnabled)startAutoSlide();
   });
 });
- 
+
 /* ── PERIOD FILTER ───────────────────────────────────── */
 document.getElementById('psel').addEventListener('change',e=>{ST.period=e.target.value;renderAll()});
- 
+
 /* ── INIT ────────────────────────────────────────────── */
 async function init(){
   const ld=document.getElementById('loading');
@@ -1093,7 +1093,7 @@ async function init(){
     ld.innerHTML=`<div style="color:#e53935;text-align:center;padding:40px;font-size:1rem;max-width:400px">⚠️ Erro ao carregar dados<br><small style="opacity:.65;display:block;margin:8px 0">${e.message}</small><button onclick="init()" style="margin-top:16px;padding:12px 28px;background:var(--gold);color:#061c0e;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:.95rem;font-family:'Sora',sans-serif">↺ Tentar Novamente</button></div>`;
   }
 }
- 
+
 /* ── SENHA DE ACESSO ─────────────────────────────────── */
 (function checkPassword(){
   const SENHA='borasuri2026';const SESSION_KEY='copa_cs_auth';
@@ -1121,7 +1121,7 @@ async function init(){
   document.getElementById('auth-input').addEventListener('focus',function(){this.style.borderColor='#f5c842'});
   document.getElementById('auth-input').addEventListener('blur',function(){this.style.borderColor='rgba(46,204,113,.35)'});
 })();
- 
+
 /* ── AUTO-REFRESH a cada 60s ─────────────────────────── */
 setInterval(()=>{
   const ld=document.getElementById('loading');
